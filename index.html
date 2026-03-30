@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Word Whiz!</title>
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="shortcut icon" href="favicon.ico">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -199,9 +201,9 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 
 .site-logo { max-width: min(420px, 90vw); height: auto; margin-bottom: 0.6rem; }
 .big-word { font-family:'Fredoka One',cursive; font-size:1.5em; color:var(--navy); }
-.d-canvas-wrap { position:relative;border-radius:24px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.14);cursor:url('crayon.cur'),crosshair; }
+.d-canvas-wrap { position:relative;border-radius:24px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.14); }
 #d-card-canvas { position:absolute;inset:0;z-index:0;display:block; }
-#d-art-canvas  { position:absolute;inset:0;z-index:1;display:block;cursor:url('crayon.cur'),crosshair !important; }
+#d-art-canvas  { position:absolute;inset:0;z-index:1;display:block; }
 #d-word-canvas { position:relative;z-index:2;display:block;pointer-events:none; }
 .d-hint { text-align:center;font-weight:800;font-size:0.9rem;color:#9CA3AF; }
 
@@ -223,7 +225,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
       <span class="home-star">⭐</span>
       <h1 class="logo"><span class="w1">Word</span> <span class="w2">Whi</span><span class="w3">z!</span></h1>
     </div>
-    <p class="tagline">Learn <span class="big-word">to</span>, <span class="big-word">too</span>, <span class="big-word">two</span>, <span class="big-word">their</span> &amp; <span class="big-word">there</span> the fun way 🫠 </p>
+    <p class="tagline">Learn <span class="big-word">to</span>, <span class="big-word">too</span>, <span class="big-word">two</span>, <span class="big-word">their</span> &amp; <span class="big-word">there</span> the fun way 🎉</p>
     <div class="mode-grid">
       <button class="mode-card c1" onclick="showScreen('learn')">
         <span class="mode-icon">🎬</span><span class="mode-num">Mode 1</span>
@@ -537,6 +539,9 @@ const D_SPEED=0.06;
 const dCardCanvas=document.getElementById('d-card-canvas');
 const dArtCanvas =document.getElementById('d-art-canvas');
 const dWordCanvas=document.getElementById('d-word-canvas');
+// set default cursor
+dArtCanvas.style.cursor = "url('crayon.png'), crosshair";
+document.getElementById('d-canvas-wrap').style.cursor = "url('crayon.png'), crosshair";
 const dCardCtx=dCardCanvas.getContext('2d');
 const dArtCtx =dArtCanvas.getContext('2d');
 const dWordCtx=dWordCanvas.getContext('2d');
@@ -694,8 +699,8 @@ function dSetTool(t){
   dTool=t;
   document.getElementById('d-btn-brush').classList.toggle('active-tool', t==='brush');
   document.getElementById('d-btn-eraser').classList.toggle('active-tool',t==='eraser');
-  const cur = t==='eraser' ? "url('erasor.cur'), cell" : "url('crayon.cur'), crosshair";
-  dArtCanvas.setAttribute('style', `position:absolute;inset:0;z-index:1;display:block;cursor:${cur}`);
+  const cur = t==='eraser' ? "url('erasor.png'), cell" : "url('crayon.png'), crosshair";
+  dArtCanvas.style.cursor = cur;
   document.getElementById('d-canvas-wrap').style.cursor = cur;
 }
 
