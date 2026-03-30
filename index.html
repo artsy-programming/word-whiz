@@ -160,8 +160,8 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .quiz-restart-btn:hover{transform:translateY(-3px);}
 
 /* ══ MODE 4: DESIGN ══ */
-#design { background:linear-gradient(180deg,#FFFBE6 0%,#F5F0FF 100%); }
-.design-body { padding:1.4rem 1rem 2rem;width:100%;max-width:660px;display:flex;flex-direction:column;gap:1rem; }
+#design { background:linear-gradient(180deg,#FFFBE6 0%,#F5F0FF 100%);position:relative;overflow:hidden; }
+.design-body { padding:1.4rem 1rem 2rem;width:100%;max-width:660px;display:flex;flex-direction:column;gap:1rem;position:relative;z-index:1; }
 
 .d-word-picker { display:flex;flex-wrap:wrap;gap:0.55rem;justify-content:center; }
 .d-word-btn { font-family:'Fredoka One',cursive;font-size:1.2rem;padding:0.45rem 1.2rem;border-radius:50px;border:3px solid #E5E7EB;background:white;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,0.08);transition:transform .15s,box-shadow .15s;color:var(--navy); }
@@ -330,6 +330,9 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 
 <!-- MODE 4: DESIGN -->
 <section id="design" class="screen">
+  <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
+  <div class="blob blob4"></div><div class="blob blob5"></div><div class="blob blob6"></div>
+  <div class="blob blob7"></div><div class="blob blob8"></div>
   <div class="top-bar">
     <button class="back-btn" onclick="showScreen('home')">← Back</button>
     <span class="bar-title">🎨 Design Your Own Flashcard!</span>
@@ -379,7 +382,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
       </div>
     </div>
     <p class="d-hint" id="d-hint">👆 Pick a word above to start!</p>
-    <p class="d-inspo">✨ Try coloring it in, tracing the letters, or doodling something that helps you remember what the word means!</p>
+    <p class="d-inspo">✨ Try coloring around the word, or doodling something that helps you remember what the word means!</p>
     <div id="d-tip" style="display:none;background:white;border-radius:14px;padding:0.7rem 1rem;font-weight:800;font-size:0.95rem;color:#374151;box-shadow:0 3px 12px rgba(0,0,0,0.08);text-align:center;"></div>
     <div class="d-canvas-wrap" id="d-canvas-wrap">
       <canvas id="d-card-canvas"></canvas>
