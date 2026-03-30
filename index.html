@@ -97,12 +97,12 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .video-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
 .video-word{font-family:'Fredoka One',cursive;font-size:2.5rem;}
 .video-tip{background:#F3F4F6;border-radius:12px;padding:0.6rem 1rem;font-weight:800;font-size:0.95rem;color:#374151;flex:1;min-width:200px;}
-.video-wrap{width:100%;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:16/9;}
+.video-wrap{width:100%;max-width:400px;margin:0 auto;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:1/1;}
 .video-wrap video{width:100%;height:100%;display:block;}
 
 /* ══ MODE 2 ══ */
-#match{background:linear-gradient(180deg,#F5F0FF 0%,#F0FFF8 100%);}
-.match-body{padding:2rem 1.5rem;width:100%;max-width:800px;}
+#match{background:linear-gradient(180deg,#F5F0FF 0%,#F0FFF8 100%);position:relative;overflow:hidden;}
+.match-body{padding:2rem 1.5rem;width:100%;max-width:800px;position:relative;z-index:1;}
 .match-instructions{text-align:center;margin-bottom:1.5rem;}
 .match-instructions h2{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--navy);}
 .match-instructions p{font-weight:700;color:#6B7280;margin-top:0.3rem;}
@@ -126,8 +126,8 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .play-again-btn:hover{transform:translateY(-3px);}
 
 /* ══ MODE 3 ══ */
-#quiz{background:linear-gradient(180deg,#FFF0F5 0%,#F0F8FF 100%);}
-.quiz-body{padding:2rem 1.5rem;width:100%;max-width:760px;}
+#quiz{background:linear-gradient(180deg,#FFF0F5 0%,#F0F8FF 100%);position:relative;overflow:hidden;}
+.quiz-body{padding:2rem 1.5rem;width:100%;max-width:760px;position:relative;z-index:1;}
 .quiz-progress{display:flex;align-items:center;gap:0.8rem;margin-bottom:1.2rem;}
 .progress-bar-wrap{flex:1;background:#E5E7EB;border-radius:50px;height:14px;overflow:hidden;}
 .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--coral),var(--purple));border-radius:50px;transition:width .4s ease;}
@@ -274,6 +274,9 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 
 <!-- MODE 2: MATCH -->
 <section id="match" class="screen">
+  <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
+  <div class="blob blob4"></div><div class="blob blob5"></div><div class="blob blob6"></div>
+  <div class="blob blob7"></div><div class="blob blob8"></div>
   <div class="top-bar">
     <button class="back-btn" onclick="showScreen('home')">← Home</button>
     <span class="bar-title">🃏 Match It!</span>
@@ -296,6 +299,9 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 
 <!-- MODE 3: QUIZ -->
 <section id="quiz" class="screen">
+  <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
+  <div class="blob blob4"></div><div class="blob blob5"></div><div class="blob blob6"></div>
+  <div class="blob blob7"></div><div class="blob blob8"></div>
   <div class="top-bar">
     <button class="back-btn" onclick="showScreen('home')">← Home</button>
     <span class="bar-title">🌟 Pick It!</span>
