@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Wizard!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --coral:#FF6B6B; --yellow:#FFD93D; --teal:#4ECDC4;
+  --purple:#C084FC; --green:#6BCB77; --navy:#1E1B4B; --cream:#FFFBF0;
+}
+body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100vh; overflow-x:hidden; }
+.screen { display:none; min-height:100vh; flex-direction:column; align-items:center; }
+.screen.active { display:flex; }
+
+/* ══ HOME ══ */
+#home { justify-content:center; padding:2rem; background:linear-gradient(135deg,#FFF9E6 0%,#FFF0F5 50%,#F0F8FF 100%); position:relative; overflow:hidden; }
+.blob { position:absolute; border-radius:50%; opacity:0.22; pointer-events:none; }
+.blob1 { width:420px;height:420px;background:var(--yellow);top:-140px;right:-100px;animation:blobFloat 6s ease-in-out infinite; }
+.blob2 { width:320px;height:320px;background:var(--teal);bottom:-80px;left:-80px;animation:blobFloat 7s ease-in-out infinite reverse; }
+.blob3 { width:200px;height:200px;background:var(--coral);top:40%;left:-60px;animation:blobFloat 5s ease-in-out infinite; }
+@keyframes blobFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-20px) scale(1.04)} }
+.home-inner { position:relative;z-index:1;text-align:center;max-width:960px;width:100%; }
+.home-star { font-size:5rem;display:block;animation:spin 5s linear infinite;margin-bottom:0.2rem; }
+@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.logo { font-family:'Fredoka One',cursive;font-size:clamp(3rem,9vw,6rem);color:var(--navy);line-height:1;margin-bottom:0.3rem; }
+.logo .w1{color:var(--coral)} .logo .w2{color:var(--teal)} .logo .w3{color:var(--purple)}
+.tagline { font-size:clamp(1rem,3vw,1.25rem);font-weight:800;color:#6B7280;margin-bottom:2.5rem; }
+.mode-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem;width:100%; }
+.mode-card { background:white;border-radius:24px;padding:1.8rem 1.4rem;cursor:pointer;border:none;box-shadow:0 6px 0 rgba(0,0,0,0.09),0 2px 16px rgba(0,0,0,0.07);transition:transform .15s,box-shadow .15s;text-align:center; }
+.mode-card:hover { transform:translateY(-6px);box-shadow:0 12px 0 rgba(0,0,0,0.10),0 4px 24px rgba(0,0,0,0.12); }
+.mode-card.c1{border-top:6px solid var(--coral)} .mode-card.c2{border-top:6px solid var(--teal)}
+.mode-card.c3{border-top:6px solid var(--purple)} .mode-card.c4{border-top:6px solid var(--yellow)}
+.mode-icon { font-size:2.8rem;display:block;margin-bottom:0.4rem; }
+.mode-num  { font-size:0.78rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;color:#9CA3AF; }
+.mode-title { font-family:'Fredoka One',cursive;font-size:1.5rem;color:var(--navy);display:block;margin-top:0.1rem; }
+.mode-desc  { font-size:0.85rem;font-weight:700;color:#9CA3AF;display:block;margin-top:0.3rem; }
+
+/* ══ TOP BAR ══ */
+.top-bar { width:100%;display:flex;align-items:center;gap:1rem;padding:0.9rem 1.5rem;background:white;box-shadow:0 3px 12px rgba(0,0,0,0.08);position:sticky;top:0;z-index:50; }
+.back-btn { background:var(--coral);color:white;border:none;border-radius:50px;padding:0.5rem 1.2rem;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;transition:transform .15s,background .15s; }
+.back-btn:hover{transform:scale(1.06);background:#e05555;}
+.bar-title{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--navy);}
+
+/* ══ MODE 1 ══ */
+#learn{background:linear-gradient(180deg,#F0F9FF 0%,#FFF9E6 100%);}
+.learn-body{padding:2rem 1.5rem;width:100%;max-width:900px;}
+.learn-intro{text-align:center;margin-bottom:1.8rem;}
+.learn-intro h2{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--navy);}
+.learn-intro p{font-weight:700;color:#6B7280;margin-top:0.3rem;}
+.word-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;margin-bottom:2rem;}
+.word-pill{background:white;border:3px solid transparent;border-radius:18px;padding:1.2rem 1rem;text-align:center;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,0.08);transition:transform .15s,box-shadow .15s;font-family:'Fredoka One',cursive;font-size:1.6rem;color:var(--navy);}
+.word-pill:hover{transform:translateY(-4px);box-shadow:0 8px 0 rgba(0,0,0,0.10);}
+.word-pill.active{transform:translateY(-4px);}
+.word-pill .pill-emoji{font-size:1.6rem;display:block;margin-bottom:0.2rem;}
+.word-pill[data-word="to"]{border-color:var(--coral)} .word-pill[data-word="too"]{border-color:var(--yellow)}
+.word-pill[data-word="two"]{border-color:var(--teal)} .word-pill[data-word="their"]{border-color:var(--purple)}
+.word-pill[data-word="there"]{border-color:var(--green)}
+.word-pill[data-word="to"].active{background:#FFF0F0} .word-pill[data-word="too"].active{background:#FFFBE6}
+.word-pill[data-word="two"].active{background:#F0FFFE} .word-pill[data-word="their"].active{background:#FAF0FF}
+.word-pill[data-word="there"].active{background:#F0FFF4}
+.video-panel{background:white;border-radius:24px;padding:1.5rem;box-shadow:0 6px 24px rgba(0,0,0,0.10);display:none;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);}
+.video-panel.visible{display:block;}
+@keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.video-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
+.video-word{font-family:'Fredoka One',cursive;font-size:2.5rem;}
+.video-tip{background:#F3F4F6;border-radius:12px;padding:0.6rem 1rem;font-weight:800;font-size:0.95rem;color:#374151;flex:1;min-width:200px;}
+.video-wrap{width:100%;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:16/9;}
+.video-wrap video{width:100%;height:100%;display:block;}
+
+/* ══ MODE 2 ══ */
+#match{background:linear-gradient(180deg,#F5F0FF 0%,#F0FFF8 100%);}
+.match-body{padding:2rem 1.5rem;width:100%;max-width:800px;}
+.match-instructions{text-align:center;margin-bottom:1.5rem;}
+.match-instructions h2{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--navy);}
+.match-instructions p{font-weight:700;color:#6B7280;margin-top:0.3rem;}
+.match-score-bar{display:flex;justify-content:center;margin-bottom:1.5rem;}
+.score-badge{background:white;border-radius:50px;padding:0.5rem 1.4rem;font-weight:900;font-size:1.1rem;color:var(--navy);box-shadow:0 3px 10px rgba(0,0,0,0.10);}
+.score-badge span{color:var(--teal)}
+.match-columns{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.match-col-label{font-family:'Fredoka One',cursive;font-size:1.05rem;text-align:center;color:#9CA3AF;margin-bottom:0.6rem;}
+.match-item{background:white;border:3px solid #E5E7EB;border-radius:16px;padding:0.9rem 1rem;text-align:center;cursor:pointer;font-weight:800;font-size:1rem;color:var(--navy);transition:transform .15s,border-color .15s,background .15s;box-shadow:0 3px 0 rgba(0,0,0,0.06);margin-bottom:0.7rem;user-select:none;line-height:1.3;}
+.match-item:hover:not(.matched){transform:translateY(-3px);border-color:var(--teal);}
+.match-item.selected{border-color:var(--purple);background:#FAF0FF;transform:scale(1.04);}
+.match-item.matched{background:#F0FFF4;border-color:var(--green);color:#166534;pointer-events:none;}
+.match-item.wrong{border-color:var(--coral);background:#FFF0F0;animation:shake .35s;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.match-win{display:none;text-align:center;padding:2rem;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
+.match-win.show{display:block;}
+.match-win h2{font-family:'Fredoka One',cursive;font-size:2.5rem;color:var(--navy);}
+.big-emoji{font-size:5rem;display:block;margin:1rem 0;animation:floatAnim 2s ease-in-out infinite;}
+@keyframes floatAnim{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.play-again-btn{background:var(--teal);color:white;border:none;border-radius:50px;padding:0.9rem 2.5rem;font-family:'Fredoka One',cursive;font-size:1.4rem;cursor:pointer;box-shadow:0 5px 0 #2d9e97;transition:transform .15s;margin-top:1rem;display:inline-block;}
+.play-again-btn:hover{transform:translateY(-3px);}
+
+/* ══ MODE 3 ══ */
+#quiz{background:linear-gradient(180deg,#FFF0F5 0%,#F0F8FF 100%);}
+.quiz-body{padding:2rem 1.5rem;width:100%;max-width:760px;}
+.quiz-progress{display:flex;align-items:center;gap:0.8rem;margin-bottom:1.2rem;}
+.progress-bar-wrap{flex:1;background:#E5E7EB;border-radius:50px;height:14px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--coral),var(--purple));border-radius:50px;transition:width .4s ease;}
+.progress-text{font-weight:900;color:var(--navy);font-size:0.95rem;white-space:nowrap;}
+.quiz-score-live{text-align:center;font-weight:900;font-size:1rem;color:#6B7280;margin-bottom:1.2rem;}
+.quiz-score-live span{color:var(--green);font-size:1.3rem;}
+.question-card{background:white;border-radius:24px;padding:2rem;box-shadow:0 6px 0 rgba(0,0,0,0.08),0 2px 20px rgba(0,0,0,0.07);margin-bottom:1.5rem;text-align:center;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);}
+.question-num{font-size:0.78rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.8rem;}
+.question-sentence{font-family:'Fredoka One',cursive;font-size:clamp(1.3rem,4vw,1.9rem);color:var(--navy);line-height:1.4;margin-bottom:1.5rem;}
+.question-sentence .blank{display:inline-block;background:#F3F4F6;border-radius:8px;padding:0 0.5rem;color:#9CA3AF;border-bottom:3px dashed #9CA3AF;min-width:80px;}
+.choices-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.9rem;}
+.choice-btn{background:white;border:3px solid #E5E7EB;border-radius:16px;padding:1rem;font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--navy);cursor:pointer;transition:transform .15s,border-color .15s,background .15s;box-shadow:0 4px 0 rgba(0,0,0,0.08);}
+.choice-btn:hover:not(:disabled){transform:translateY(-4px);border-color:var(--purple);}
+.choice-btn:disabled{cursor:default;}
+.choice-btn.correct{background:#F0FFF4;border-color:var(--green);color:#166534;}
+.choice-btn.wrong{background:#FFF0F0;border-color:var(--coral);color:#991B1B;}
+.feedback-bubble{margin-top:1.2rem;padding:0.8rem 1.2rem;border-radius:14px;font-weight:800;font-size:1rem;display:none;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);line-height:1.5;}
+.feedback-bubble.show{display:block;}
+.feedback-bubble.correct{background:#ECFDF5;color:#065F46;}
+.feedback-bubble.wrong{background:#FEF2F2;color:#991B1B;}
+.next-btn{display:none;margin:1rem auto 0;background:var(--purple);color:white;border:none;border-radius:50px;padding:0.9rem 2rem;font-family:'Fredoka One',cursive;font-size:1.3rem;cursor:pointer;box-shadow:0 5px 0 #7c3aed;transition:transform .15s;width:fit-content;}
+.next-btn.show{display:block;}
+.next-btn:hover{transform:translateY(-3px);}
+.quiz-end{display:none;text-align:center;padding:2rem 1rem;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
+.quiz-end.show{display:block;}
+.quiz-end h2{font-family:'Fredoka One',cursive;font-size:2.5rem;color:var(--navy);}
+.end-score{font-size:1.4rem;font-weight:900;color:#6B7280;margin:0.8rem 0 1rem;}
+.end-score span{color:var(--purple);font-size:2rem;}
+.quiz-restart-btn{background:var(--coral);color:white;border:none;border-radius:50px;padding:0.9rem 2.5rem;font-family:'Fredoka One',cursive;font-size:1.4rem;cursor:pointer;box-shadow:0 5px 0 #c0392b;transition:transform .15s;}
+.quiz-restart-btn:hover{transform:translateY(-3px);}
+
+/* ══ MODE 4: DESIGN ══ */
+#design { background:linear-gradient(180deg,#FFFBE6 0%,#F5F0FF 100%); }
+.design-body { padding:1.4rem 1rem 2rem;width:100%;max-width:660px;display:flex;flex-direction:column;gap:1rem; }
+
+.d-word-picker { display:flex;flex-wrap:wrap;gap:0.55rem;justify-content:center; }
+.d-word-btn { font-family:'Fredoka One',cursive;font-size:1.2rem;padding:0.45rem 1.2rem;border-radius:50px;border:3px solid #E5E7EB;background:white;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,0.08);transition:transform .15s,box-shadow .15s;color:var(--navy); }
+.d-word-btn:hover  { transform:translateY(-3px);box-shadow:0 7px 0 rgba(0,0,0,0.08); }
+.d-word-btn.active { transform:translateY(-3px);background:#F5F0FF;border-color:var(--purple); }
+
+.d-toolbar { background:white;border-radius:20px;padding:1rem 1.2rem;box-shadow:0 4px 16px rgba(0,0,0,0.09);display:flex;flex-direction:column;gap:0.8rem; }
+.d-tool-row { display:flex;align-items:center;gap:0.7rem;flex-wrap:wrap; }
+.d-label { font-weight:900;font-size:0.8rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.06em;min-width:82px;white-space:nowrap; }
+
+.d-color-wrap { position:relative; }
+.d-color-btn { width:38px;height:38px;border-radius:50%;border:3px solid rgba(0,0,0,0.12);cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,0.15);transition:transform .15s,box-shadow .15s;flex-shrink:0;position:relative; }
+.d-color-btn:hover { transform:scale(1.15); }
+.d-color-btn.open  { transform:scale(1.15);box-shadow:0 0 0 3px var(--purple),0 5px 12px rgba(0,0,0,0.2); }
+.d-color-btn::after { content:attr(data-label);position:absolute;bottom:-6px;right:-4px;background:var(--navy);color:white;font-family:'Nunito',sans-serif;font-weight:900;font-size:0.6rem;border-radius:50px;padding:0 4px;line-height:1.4;pointer-events:none; }
+.d-ombre-arrow { font-size:1.1rem;color:#D1D5DB;user-select:none; }
+
+.d-popover { position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);background:white;border-radius:16px;padding:0.7rem;box-shadow:0 8px 28px rgba(0,0,0,0.18);display:none;z-index:100;width:176px; }
+.d-popover.open { display:block;animation:dPopIn .18s cubic-bezier(.34,1.56,.64,1); }
+@keyframes dPopIn { from{opacity:0;transform:translateX(-50%) scale(.88)} to{opacity:1;transform:translateX(-50%) scale(1)} }
+.d-pgrid { display:grid;grid-template-columns:repeat(5,1fr);gap:6px; }
+.d-pswatch { width:26px;height:26px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;box-shadow:0 2px 5px rgba(0,0,0,0.12);transition:transform .12s; }
+.d-pswatch:hover  { transform:scale(1.22); }
+.d-pswatch.chosen { border-color:var(--navy);transform:scale(1.18); }
+.d-pswatch.white  { box-shadow:0 2px 5px rgba(0,0,0,0.12),inset 0 0 0 1px #ddd; }
+
+.d-divider { width:2px;height:28px;background:#F3F4F6;border-radius:2px;flex-shrink:0; }
+.d-size-wrap { display:flex;align-items:center;gap:0.5rem; }
+.d-size-wrap input[type="range"] { -webkit-appearance:none;width:100px;height:6px;background:#E5E7EB;border-radius:50px;outline:none; }
+.d-size-wrap input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--purple);cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.15); }
+
+.d-btn { background:#F3F4F6;border:2px solid #E5E7EB;border-radius:10px;padding:0.38rem 0.85rem;font-family:'Nunito',sans-serif;font-weight:900;font-size:0.88rem;color:#374151;cursor:pointer;transition:background .12s,transform .12s;white-space:nowrap; }
+.d-btn:hover       { background:#E5E7EB;transform:scale(1.04); }
+.d-btn.active-tool { background:#FAF0FF;border-color:var(--purple);color:#7C3AED; }
+.d-btn.d-clear     { background:#FFF0F0;border-color:var(--coral);color:#CC2222; }
+.d-btn.d-clear:hover { background:#FFE0E0; }
+
+.d-canvas-wrap { position:relative;border-radius:24px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.14); }
+#d-card-canvas { position:absolute;inset:0;z-index:0;display:block; }
+#d-art-canvas  { position:absolute;inset:0;z-index:1;display:block;cursor:crosshair; }
+#d-word-canvas { position:relative;z-index:2;display:block;pointer-events:none; }
+.d-hint { text-align:center;font-weight:800;font-size:0.9rem;color:#9CA3AF; }
+
+/* ══ CONFETTI ══ */
+#confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;}
+</style>
+</head>
+<body>
+<canvas id="confetti-canvas"></canvas>
+
+<!-- HOME -->
+<section id="home" class="screen active">
+  <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
+  <div class="home-inner">
+    <span class="home-star">⭐</span>
+    <h1 class="logo"><span class="w1">Word</span> <span class="w2">Wiz</span><span class="w3">ard!</span></h1>
+    <p class="tagline">Learn to, too, two, their &amp; there the fun way 🎉</p>
+    <div class="mode-grid">
+      <button class="mode-card c1" onclick="showScreen('learn')">
+        <span class="mode-icon">🎬</span><span class="mode-num">Mode 1</span>
+        <span class="mode-title">Learn It!</span><span class="mode-desc">Watch a video for each word</span>
+      </button>
+      <button class="mode-card c2" onclick="initMatch();showScreen('match')">
+        <span class="mode-icon">🃏</span><span class="mode-num">Mode 2</span>
+        <span class="mode-title">Match It!</span><span class="mode-desc">Match words to their meanings</span>
+      </button>
+      <button class="mode-card c3" onclick="initQuiz();showScreen('quiz')">
+        <span class="mode-icon">🌟</span><span class="mode-num">Mode 3</span>
+        <span class="mode-title">Pick It!</span><span class="mode-desc">Choose the right word in a sentence</span>
+      </button>
+      <button class="mode-card c4" onclick="showScreen('design')">
+        <span class="mode-icon">🎨</span><span class="mode-num">Mode 4</span>
+        <span class="mode-title">Design It!</span><span class="mode-desc">Create your own flashcard</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- MODE 1: LEARN -->
+<section id="learn" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="showScreen('home')">← Home</button>
+    <span class="bar-title">🎬 Learn It!</span>
+  </div>
+  <div class="learn-body">
+    <div class="learn-intro"><h2>Pick a word to learn! 👇</h2><p>Tap any word below to watch its video</p></div>
+    <div class="word-grid">
+      <button class="word-pill" data-word="to"    onclick="showVideo('to')">   <span class="pill-emoji">➡️</span>to    </button>
+      <button class="word-pill" data-word="too"   onclick="showVideo('too')">  <span class="pill-emoji">😄</span>too   </button>
+      <button class="word-pill" data-word="two"   onclick="showVideo('two')">  <span class="pill-emoji">✌️</span>two   </button>
+      <button class="word-pill" data-word="their" onclick="showVideo('their')"><span class="pill-emoji">🎒</span>their </button>
+      <button class="word-pill" data-word="there" onclick="showVideo('there')"><span class="pill-emoji">📍</span>there </button>
+    </div>
+    <div id="video-panel" class="video-panel">
+      <div class="video-header">
+        <span id="video-word-label" class="video-word"></span>
+        <div id="video-tip" class="video-tip"></div>
+      </div>
+      <div class="video-wrap"><video id="learn-video" controls playsinline>Your browser does not support video.</video></div>
+    </div>
+  </div>
+</section>
+
+<!-- MODE 2: MATCH -->
+<section id="match" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="showScreen('home')">← Home</button>
+    <span class="bar-title">🃏 Match It!</span>
+  </div>
+  <div class="match-body">
+    <div class="match-instructions"><h2>Match the word to its meaning! 🔗</h2><p>Tap a word on the left, then tap its meaning on the right</p></div>
+    <div class="match-score-bar"><div class="score-badge">Matched: <span id="match-count">0</span> / 5</div></div>
+    <div id="match-game" class="match-columns">
+      <div><div class="match-col-label">Word</div><div id="words-col"></div></div>
+      <div><div class="match-col-label">Meaning</div><div id="meanings-col"></div></div>
+    </div>
+    <div id="match-win" class="match-win">
+      <h2>You matched them all! 🎊</h2>
+      <span class="big-emoji">🏆</span>
+      <p style="font-weight:800;color:#6B7280;font-size:1.1rem">Amazing job, Word Wizard!</p>
+      <button class="play-again-btn" onclick="initMatch()">Play Again!</button>
+    </div>
+  </div>
+</section>
+
+<!-- MODE 3: QUIZ -->
+<section id="quiz" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="showScreen('home')">← Home</button>
+    <span class="bar-title">🌟 Pick It!</span>
+  </div>
+  <div class="quiz-body">
+    <div class="quiz-progress">
+      <div class="progress-bar-wrap"><div id="progress-fill" class="progress-bar-fill" style="width:0%"></div></div>
+      <span id="progress-text" class="progress-text">1 / 10</span>
+    </div>
+    <div class="quiz-score-live">⭐ Score: <span id="live-score">0</span></div>
+    <div id="quiz-question" class="question-card">
+      <div id="q-num" class="question-num"></div>
+      <div id="q-sentence" class="question-sentence"></div>
+      <div id="choices" class="choices-grid"></div>
+      <div id="feedback" class="feedback-bubble"></div>
+      <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next ➡️</button>
+    </div>
+    <div id="quiz-end" class="quiz-end">
+      <span class="big-emoji">🎉</span><h2>Quiz Complete!</h2>
+      <p class="end-score">You got <span id="final-score">0</span> out of 10!</p>
+      <button class="quiz-restart-btn" onclick="initQuiz()">Try Again!</button>
+    </div>
+  </div>
+</section>
+
+<!-- MODE 4: DESIGN -->
+<section id="design" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="showScreen('home')">← Home</button>
+    <span class="bar-title">🎨 Design Your Own Flashcard!</span>
+  </div>
+  <div class="design-body">
+    <div class="d-word-picker">
+      <button class="d-word-btn" data-w="to"    onclick="dPickWord('to')">to</button>
+      <button class="d-word-btn" data-w="too"   onclick="dPickWord('too')">too</button>
+      <button class="d-word-btn" data-w="two"   onclick="dPickWord('two')">two</button>
+      <button class="d-word-btn" data-w="their" onclick="dPickWord('their')">their</button>
+      <button class="d-word-btn" data-w="there" onclick="dPickWord('there')">there</button>
+    </div>
+    <div class="d-toolbar">
+      <div class="d-tool-row">
+        <span class="d-label">Card Color</span>
+        <div class="d-color-wrap">
+          <div class="d-color-btn" id="d-card-btn-a" data-label="A" onclick="dTogglePalette('card-a')"></div>
+          <div class="d-popover" id="d-pop-card-a"><div class="d-pgrid" id="d-grid-card-a"></div></div>
+        </div>
+        <span class="d-ombre-arrow">〜</span>
+        <div class="d-color-wrap">
+          <div class="d-color-btn" id="d-card-btn-b" data-label="B" onclick="dTogglePalette('card-b')"></div>
+          <div class="d-popover" id="d-pop-card-b"><div class="d-pgrid" id="d-grid-card-b"></div></div>
+        </div>
+      </div>
+      <div class="d-tool-row">
+        <span class="d-label">Brush Color</span>
+        <div class="d-color-wrap">
+          <div class="d-color-btn" id="d-brush-btn-a" data-label="A" onclick="dTogglePalette('brush-a')"></div>
+          <div class="d-popover" id="d-pop-brush-a"><div class="d-pgrid" id="d-grid-brush-a"></div></div>
+        </div>
+        <span class="d-ombre-arrow">〜</span>
+        <div class="d-color-wrap">
+          <div class="d-color-btn" id="d-brush-btn-b" data-label="B" onclick="dTogglePalette('brush-b')"></div>
+          <div class="d-popover" id="d-pop-brush-b"><div class="d-pgrid" id="d-grid-brush-b"></div></div>
+        </div>
+      </div>
+      <div class="d-tool-row">
+        <span class="d-label">Brush Size</span>
+        <div class="d-size-wrap">
+          <input type="range" id="d-brush-size" min="4" max="64" value="22" oninput="dBrushSize=+this.value">
+        </div>
+        <div class="d-divider"></div>
+        <button class="d-btn active-tool" id="d-btn-brush"  onclick="dSetTool('brush')">🖌 Brush</button>
+        <button class="d-btn"             id="d-btn-eraser" onclick="dSetTool('eraser')">🧹 Eraser</button>
+        <button class="d-btn d-clear"                       onclick="dClearArt()">✕ Clear</button>
+      </div>
+    </div>
+    <div class="d-canvas-wrap" id="d-canvas-wrap">
+      <canvas id="d-card-canvas"></canvas>
+      <canvas id="d-art-canvas"
+        onmousedown="dStartDraw(event)" onmousemove="dDoDraw(event)"
+        onmouseup="dStopDraw()" onmouseleave="dStopDraw()"
+        ontouchstart="dStartDraw(event)" ontouchmove="dDoDraw(event)" ontouchend="dStopDraw()">
+      </canvas>
+      <canvas id="d-word-canvas"></canvas>
+    </div>
+    <p class="d-hint" id="d-hint">👆 Pick a word above to start!</p>
+  </div>
+</section>
+
+<script>
+// ── SCREEN ROUTER ──
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── MODE 1: LEARN ──
+const wordData = {
+  to:    {emoji:'➡️', color:'#FF6B6B', tip:'"to" = going somewhere or doing something  •  "I want TO go to the park!"'},
+  too:   {emoji:'😄', color:'#F59E0B', tip:'"too" = also OR very much  •  "Me TOO!"  /  "That\'s TOO loud!"'},
+  two:   {emoji:'✌️', color:'#4ECDC4', tip:'"two" = the number 2  •  "I have TWO cats"'},
+  their: {emoji:'🎒', color:'#C084FC', tip:'"their" = belongs to them  •  "THEIR backpack is blue"'},
+  there: {emoji:'📍', color:'#6BCB77', tip:'"there" = a place or location  •  "Put it over THERE"'},
+};
+function showVideo(word) {
+  document.querySelectorAll('.word-pill').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.word-pill[data-word="${word}"]`).classList.add('active');
+  const d=wordData[word], panel=document.getElementById('video-panel'),
+        label=document.getElementById('video-word-label'),
+        tip=document.getElementById('video-tip'), vid=document.getElementById('learn-video');
+  label.textContent=d.emoji+' '+word; label.style.color=d.color;
+  tip.textContent=d.tip; vid.src=word+'.mp4'; vid.load(); vid.play();
+  panel.classList.add('visible');
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ── MODE 2: MATCH ──
+const matchPairs=[
+  {word:'to',   meaning:'➡️ going / doing something'},
+  {word:'too',  meaning:'😄 also, or very much'},
+  {word:'two',  meaning:'✌️ the number 2'},
+  {word:'their',meaning:'🎒 belongs to them'},
+  {word:'there',meaning:'📍 a place or location'},
+];
+let selWord=null,selMeaning=null,matchedCount=0;
+function shuffle(arr){return[...arr].sort(()=>Math.random()-.5);}
+function initMatch(){
+  selWord=null;selMeaning=null;matchedCount=0;
+  document.getElementById('match-count').textContent='0';
+  document.getElementById('match-win').classList.remove('show');
+  document.getElementById('match-game').style.display='grid';
+  const wCol=document.getElementById('words-col'),mCol=document.getElementById('meanings-col');
+  wCol.innerHTML='';mCol.innerHTML='';
+  shuffle(matchPairs).forEach(p=>{
+    const el=document.createElement('div');el.className='match-item';el.dataset.word=p.word;
+    el.textContent=p.word;el.onclick=()=>selectItem(el,'word');wCol.appendChild(el);
+  });
+  shuffle(matchPairs).forEach(p=>{
+    const el=document.createElement('div');el.className='match-item';el.dataset.word=p.word;
+    el.textContent=p.meaning;el.onclick=()=>selectItem(el,'meaning');mCol.appendChild(el);
+  });
+}
+function selectItem(el,type){
+  if(el.classList.contains('matched'))return;
+  if(type==='word'){if(selWord)selWord.classList.remove('selected');selWord=el;el.classList.add('selected');}
+  else{if(selMeaning)selMeaning.classList.remove('selected');selMeaning=el;el.classList.add('selected');}
+  if(selWord&&selMeaning)checkMatch();
+}
+function checkMatch(){
+  if(selWord.dataset.word===selMeaning.dataset.word){
+    selWord.classList.remove('selected');selWord.classList.add('matched');
+    selMeaning.classList.remove('selected');selMeaning.classList.add('matched');
+    matchedCount++;document.getElementById('match-count').textContent=matchedCount;selWord=null;selMeaning=null;
+    if(matchedCount===5){setTimeout(()=>{document.getElementById('match-game').style.display='none';document.getElementById('match-win').classList.add('show');launchConfetti();},400);}
+  } else {
+    selWord.classList.add('wrong');selMeaning.classList.add('wrong');
+    setTimeout(()=>{selWord.classList.remove('selected','wrong');selMeaning.classList.remove('selected','wrong');selWord=null;selMeaning=null;},600);
+  }
+}
+
+// ── MODE 3: QUIZ ──
+const allQ=[
+  {s:'I want to go ___ the park.',         a:'there',c:['there','their','to']},
+  {s:'___ dog is really fluffy!',           a:'their', c:['their','there','too']},
+  {s:'Can I come ___?',                     a:'too',   c:['to','too','two']},
+  {s:'I have ___ best friends.',            a:'two',   c:['to','too','two']},
+  {s:'She walked ___ the store.',           a:'to',    c:['to','too','two']},
+  {s:'The cats are sleeping over ___.',     a:'there', c:['their','there','too']},
+  {s:'The kids left ___ backpacks here.',   a:'their', c:['there','their','to']},
+  {s:'That ice cream is ___ yummy!',        a:'too',   c:['to','too','two']},
+  {s:'We need ___ more eggs for the cake.', a:'two',   c:['to','too','two']},
+  {s:'Put the book right ___.',             a:'there', c:['their','there','too']},
+  {s:'I want ___ learn new words.',         a:'to',    c:['to','too','two']},
+  {s:'The birds built ___ nest.',           a:'their', c:['there','their','too']},
+  {s:'Is anyone sitting ___?',             a:'there', c:['their','there','to']},
+  {s:'She is ___ tired to play.',           a:'too',   c:['to','too','two']},
+  {s:'My ___ brothers are really tall.',    a:'two',   c:['to','too','two']},
+];
+const goodFb=['Great job! 🌟','You got it! 🎉','Amazing! ⭐','Correct! 🥳','Wow, nice! 🎊'];
+const badFb=['Not quite — keep going! 💪','Oops! You\'ll get it next time 🧠','Almost! Keep trying! 😊'];
+let quizQ=[],qIdx=0,qScore=0,answered=false;
+function initQuiz(){
+  qIdx=0;qScore=0;answered=false;quizQ=shuffle(allQ).slice(0,10);
+  document.getElementById('live-score').textContent='0';
+  document.getElementById('quiz-end').classList.remove('show');
+  document.getElementById('quiz-question').style.display='block';
+  document.getElementById('next-btn').classList.remove('show');
+  document.getElementById('feedback').className='feedback-bubble';renderQ();
+}
+function renderQ(){
+  answered=false;const q=quizQ[qIdx],total=quizQ.length;
+  document.getElementById('progress-fill').style.width=`${(qIdx/total)*100}%`;
+  document.getElementById('progress-text').textContent=`${qIdx+1} / ${total}`;
+  document.getElementById('q-num').textContent=`Question ${qIdx+1}`;
+  const parts=q.s.split('___');
+  document.getElementById('q-sentence').innerHTML=parts[0]+'<span class="blank">___</span>'+(parts[1]||'');
+  const choicesEl=document.getElementById('choices');choicesEl.innerHTML='';
+  shuffle(q.c).forEach(choice=>{
+    const btn=document.createElement('button');btn.className='choice-btn';btn.textContent=choice;
+    btn.onclick=()=>handleChoice(btn,choice,q.a,q.s);choicesEl.appendChild(btn);
+  });
+  document.getElementById('feedback').className='feedback-bubble';
+  document.getElementById('next-btn').classList.remove('show');
+}
+function handleChoice(btn,chosen,correct,sentence){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.choice-btn').forEach(b=>{b.disabled=true;if(b.textContent===correct)b.classList.add('correct');});
+  if(chosen!==correct)btn.classList.add('wrong');
+  const revealed=sentence.replace('___','"'+correct+'"');
+  const fb=document.getElementById('feedback');
+  if(chosen===correct){
+    qScore++;document.getElementById('live-score').textContent=qScore;
+    fb.className='feedback-bubble correct show';
+    fb.textContent=goodFb[Math.floor(Math.random()*goodFb.length)]+'  →  '+revealed;
+  } else {
+    fb.className='feedback-bubble wrong show';
+    fb.textContent=badFb[Math.floor(Math.random()*badFb.length)]+'  Correct: '+revealed;
+  }
+  document.getElementById('next-btn').classList.add('show');
+}
+function nextQuestion(){
+  qIdx++;
+  if(qIdx>=quizQ.length){
+    document.getElementById('quiz-question').style.display='none';
+    document.getElementById('quiz-end').classList.add('show');
+    document.getElementById('final-score').textContent=qScore;
+    document.getElementById('progress-fill').style.width='100%';
+    if(qScore>=8)launchConfetti();
+  } else {renderQ();}
+}
+
+// ── MODE 4: DESIGN ──
+const D_PALETTE=['#FF6B6B','#FF9F43','#FFD93D','#ADFF6B','#6BFFB8','#4ECDC4','#6BC5FF','#A78BFA','#F472B6','#FF6BD6','#FFFFFF','#C8C8FF','#FFB3C1','#B5EAD7','#000000'];
+
+let dCurrentWord=null, dTool='brush', dPainting=false, dLastX=0, dLastY=0, dBrushSize=22;
+let dCardColorA='#FFB3C1', dCardColorB='#B5EAD7', dBrushColorA='#FF6B6B', dBrushColorB='#4ECDC4';
+let dOmbrePhase=0;
+const D_SPEED=0.06;
+
+const dCardCanvas=document.getElementById('d-card-canvas');
+const dArtCanvas =document.getElementById('d-art-canvas');
+const dWordCanvas=document.getElementById('d-word-canvas');
+const dCardCtx=dCardCanvas.getContext('2d');
+const dArtCtx =dArtCanvas.getContext('2d');
+const dWordCtx=dWordCanvas.getContext('2d');
+
+const DCW=Math.min(window.innerWidth-32,640);
+const DCH=Math.round(DCW*0.5);
+[dCardCanvas,dArtCanvas,dWordCanvas].forEach(c=>{c.width=DCW;c.height=DCH;});
+document.getElementById('d-canvas-wrap').style.width=DCW+'px';
+document.getElementById('d-canvas-wrap').style.height=DCH+'px';
+
+const D_CONFIGS=[
+  {gridId:'d-grid-card-a', btnId:'d-card-btn-a',  get:()=>dCardColorA,  set:c=>{dCardColorA=c;dDrawCard();}},
+  {gridId:'d-grid-card-b', btnId:'d-card-btn-b',  get:()=>dCardColorB,  set:c=>{dCardColorB=c;dDrawCard();}},
+  {gridId:'d-grid-brush-a',btnId:'d-brush-btn-a', get:()=>dBrushColorA, set:c=>{dBrushColorA=c;}},
+  {gridId:'d-grid-brush-b',btnId:'d-brush-btn-b', get:()=>dBrushColorB, set:c=>{dBrushColorB=c;}},
+];
+D_CONFIGS.forEach(cfg=>{
+  const grid=document.getElementById(cfg.gridId);
+  const btn=document.getElementById(cfg.btnId);
+  btn.style.background=cfg.get();
+  D_PALETTE.forEach(col=>{
+    const s=document.createElement('div');
+    s.className='d-pswatch'+(col==='#FFFFFF'?' white':'');
+    s.style.background=col;
+    if(cfg.get()===col)s.classList.add('chosen');
+    s.onclick=e=>{
+      e.stopPropagation();
+      grid.querySelectorAll('.d-pswatch').forEach(x=>x.classList.remove('chosen'));
+      s.classList.add('chosen');cfg.set(col);btn.style.background=col;dCloseAllPalettes();
+    };
+    grid.appendChild(s);
+  });
+});
+
+const D_POP_MAP={'card-a':'d-pop-card-a','card-b':'d-pop-card-b','brush-a':'d-pop-brush-a','brush-b':'d-pop-brush-b'};
+const D_BTN_MAP={'card-a':'d-card-btn-a','card-b':'d-card-btn-b','brush-a':'d-brush-btn-a','brush-b':'d-brush-btn-b'};
+
+function dTogglePalette(key){
+  const popEl=document.getElementById(D_POP_MAP[key]);
+  const btnEl=document.getElementById(D_BTN_MAP[key]);
+  const isOpen=popEl.classList.contains('open');
+  dCloseAllPalettes();
+  if(!isOpen){popEl.classList.add('open');btnEl.classList.add('open');}
+}
+function dCloseAllPalettes(){
+  Object.values(D_POP_MAP).forEach(id=>document.getElementById(id).classList.remove('open'));
+  Object.values(D_BTN_MAP).forEach(id=>document.getElementById(id).classList.remove('open'));
+}
+document.addEventListener('click',e=>{if(!e.target.closest('.d-color-wrap'))dCloseAllPalettes();});
+
+const dArtStore={};
+function dPickWord(word){
+  dCurrentWord=word;
+  document.querySelectorAll('.d-word-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.d-word-btn[data-w="${word}"]`).classList.add('active');
+  document.getElementById('d-hint').textContent='🖌 Paint all over it!';
+  dDrawCard();dDrawWord();dLoadArt();
+}
+function dDrawCard(){
+  const grd=dCardCtx.createLinearGradient(0,0,DCW,DCH);
+  grd.addColorStop(0,dCardColorA);grd.addColorStop(1,dCardColorB);
+  dCardCtx.fillStyle=grd;dCardCtx.fillRect(0,0,DCW,DCH);
+}
+function dDrawWord(){
+  dWordCtx.clearRect(0,0,DCW,DCH);if(!dCurrentWord)return;
+  const fs=Math.floor(DCH*0.66);
+  dWordCtx.font=`${fs}px 'Fredoka One', cursive`;
+  dWordCtx.textAlign='center';dWordCtx.textBaseline='middle';
+  dWordCtx.shadowColor='rgba(0,0,0,0.15)';dWordCtx.shadowBlur=16;dWordCtx.shadowOffsetY=5;
+  dWordCtx.strokeStyle='rgba(0,0,0,0.13)';dWordCtx.lineWidth=fs*0.045;dWordCtx.lineJoin='round';
+  dWordCtx.strokeText(dCurrentWord,DCW/2,DCH/2);
+  dWordCtx.shadowColor='transparent';dWordCtx.shadowBlur=0;dWordCtx.shadowOffsetY=0;
+  dWordCtx.fillStyle='white';dWordCtx.fillText(dCurrentWord,DCW/2,DCH/2);
+}
+dDrawCard();
+
+function dLerp(a,b,t){
+  const ah=parseInt(a.replace('#',''),16),bh=parseInt(b.replace('#',''),16);
+  const mix=(ca,cb)=>Math.round(ca+(cb-ca)*t);
+  return `rgb(${mix((ah>>16)&0xff,(bh>>16)&0xff)},${mix((ah>>8)&0xff,(bh>>8)&0xff)},${mix(ah&0xff,bh&0xff)})`;
+}
+function dGetColor(){return dLerp(dBrushColorA,dBrushColorB,(Math.sin(dOmbrePhase)+1)/2);}
+
+function dGetPos(e){
+  const rect=dArtCanvas.getBoundingClientRect();
+  const sx=DCW/rect.width,sy=DCH/rect.height;
+  const src=e.touches?e.touches[0]:e;
+  return{x:(src.clientX-rect.left)*sx,y:(src.clientY-rect.top)*sy};
+}
+function dStartDraw(e){
+  if(!dCurrentWord)return;e.preventDefault();dPainting=true;
+  const p=dGetPos(e);dLastX=p.x;dLastY=p.y;dStroke(dLastX,dLastY,dLastX+0.1,dLastY+0.1);
+}
+function dDoDraw(e){
+  if(!dPainting)return;e.preventDefault();
+  const p=dGetPos(e);dStroke(dLastX,dLastY,p.x,p.y);dLastX=p.x;dLastY=p.y;
+}
+function dStopDraw(){
+  dPainting=false;if(!dCurrentWord)return;
+  const data=dArtCanvas.toDataURL('image/jpeg',0.4);
+  dArtStore[dCurrentWord]=data;
+  try{localStorage.setItem('ww_art_'+dCurrentWord,data);}catch(e){}
+}
+function dStroke(x1,y1,x2,y2){
+  dArtCtx.save();dArtCtx.lineCap='round';dArtCtx.lineJoin='round';
+  if(dTool==='eraser'){
+    dArtCtx.globalCompositeOperation='destination-out';
+    dArtCtx.strokeStyle='rgba(0,0,0,1)';dArtCtx.lineWidth=dBrushSize*1.5;dArtCtx.globalAlpha=1;
+  } else {
+    dArtCtx.globalCompositeOperation='source-over';
+    dArtCtx.strokeStyle=dGetColor();dArtCtx.lineWidth=dBrushSize;dArtCtx.globalAlpha=0.88;
+    dOmbrePhase+=D_SPEED;
+  }
+  dArtCtx.beginPath();dArtCtx.moveTo(x1,y1);dArtCtx.lineTo(x2,y2);dArtCtx.stroke();dArtCtx.restore();
+}
+function dLoadArt(){
+  dArtCtx.clearRect(0,0,DCW,DCH);
+  const data=dArtStore[dCurrentWord]||(()=>{try{return localStorage.getItem('ww_art_'+dCurrentWord);}catch(e){}})();
+  if(data){const img=new Image();img.onload=()=>dArtCtx.drawImage(img,0,0);img.src=data;}
+}
+function dClearArt(){
+  dArtCtx.clearRect(0,0,DCW,DCH);dOmbrePhase=0;
+  delete dArtStore[dCurrentWord];
+  try{localStorage.removeItem('ww_art_'+dCurrentWord);}catch(e){}
+}
+function dSetTool(t){
+  dTool=t;
+  document.getElementById('d-btn-brush').classList.toggle('active-tool', t==='brush');
+  document.getElementById('d-btn-eraser').classList.toggle('active-tool',t==='eraser');
+}
+
+// ── CONFETTI ──
+function launchConfetti(){
+  const canvas=document.getElementById('confetti-canvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const colors=['#FF6B6B','#FFD93D','#4ECDC4','#C084FC','#6BCB77','#60A5FA','#FB923C'];
+  const pieces=Array.from({length:130},()=>({
+    x:Math.random()*canvas.width,y:Math.random()*-canvas.height,
+    w:6+Math.random()*10,h:10+Math.random()*16,
+    r:Math.random()*Math.PI*2,dr:(Math.random()-.5)*0.15,
+    vy:2+Math.random()*4,vx:(Math.random()-.5)*2,
+    color:colors[Math.floor(Math.random()*colors.length)],
+  }));
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();p.y+=p.vy;p.x+=p.vx;p.r+=p.dr;});
+    frame++;if(frame<220)requestAnimationFrame(draw);else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+</script>
+</body>
+</html>
