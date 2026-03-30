@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Word Whiz!</title>
+<title>Word Wizard!</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -146,7 +146,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .d-color-btn { width:38px;height:38px;border-radius:50%;border:3px solid rgba(0,0,0,0.12);cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,0.15);transition:transform .15s,box-shadow .15s;flex-shrink:0;position:relative; }
 .d-color-btn:hover { transform:scale(1.15); }
 .d-color-btn.open  { transform:scale(1.15);box-shadow:0 0 0 3px var(--purple),0 5px 12px rgba(0,0,0,0.2); }
-.d-color-btn::after { content:attr(data-label);position:absolute;bottom:-6px;right:-4px;background:var(--navy);color:white;font-family:'Nunito',sans-serif;font-weight:900;font-size:0.6rem;border-radius:50px;padding:0 4px;line-height:1.4;pointer-events:none; }
+
 .d-ombre-arrow { font-size:1.1rem;color:#D1D5DB;user-select:none; }
 
 .d-popover { position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);background:white;border-radius:16px;padding:0.7rem;box-shadow:0 8px 28px rgba(0,0,0,0.18);display:none;z-index:100;width:176px; }
@@ -169,9 +169,10 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .d-btn.d-clear     { background:#FFF0F0;border-color:var(--coral);color:#CC2222; }
 .d-btn.d-clear:hover { background:#FFE0E0; }
 
-.d-canvas-wrap { position:relative;border-radius:24px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.14); }
+.site-logo { max-width: min(420px, 90vw); height: auto; margin-bottom: 0.6rem; }
+.big-word { font-family:'Fredoka One',cursive; font-size:1.5em; color:var(--navy); }border-radius:24px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.14); }
 #d-card-canvas { position:absolute;inset:0;z-index:0;display:block; }
-#d-art-canvas  { position:absolute;inset:0;z-index:1;display:block;cursor:crosshair; }
+#d-art-canvas  { position:absolute;inset:0;z-index:1;display:block;cursor:url('crayon.cur'),crosshair; }
 #d-word-canvas { position:relative;z-index:2;display:block;pointer-events:none; }
 .d-hint { text-align:center;font-weight:800;font-size:0.9rem;color:#9CA3AF; }
 
@@ -186,9 +187,12 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 <section id="home" class="screen active">
   <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
   <div class="home-inner">
-    <span class="home-star">⭐</span>
-    <h1 class="logo"><span class="w1">Word</span> <span class="w2">Wiz</span><span class="w3">ard!</span></h1>
-    <p class="tagline">Learn to, too, two, their &amp; there the fun way 🎉</p>
+    <img src="logo.png" alt="Word Whiz" class="site-logo" onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='block'">
+    <div id="logo-fallback" style="display:none">
+      <span class="home-star">⭐</span>
+      <h1 class="logo"><span class="w1">Word</span> <span class="w2">Whi</span><span class="w3">z!</span></h1>
+    </div>
+    <p class="tagline">Learn <span class="big-word">to</span>, <span class="big-word">too</span>, <span class="big-word">two</span>, <span class="big-word">their</span> &amp; <span class="big-word">there</span> the fun way 🎉</p>
     <div class="mode-grid">
       <button class="mode-card c1" onclick="showScreen('learn')">
         <span class="mode-icon">🎬</span><span class="mode-num">Mode 1</span>
@@ -334,6 +338,8 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
         <button class="d-btn d-clear"                       onclick="dClearArt()">✕ Clear</button>
       </div>
     </div>
+    <p class="d-hint" id="d-hint">👆 Pick a word above to start!</p>
+    <div id="d-tip" style="display:none;background:white;border-radius:14px;padding:0.7rem 1rem;font-weight:800;font-size:0.95rem;color:#374151;box-shadow:0 3px 12px rgba(0,0,0,0.08);text-align:center;"></div>
     <div class="d-canvas-wrap" id="d-canvas-wrap">
       <canvas id="d-card-canvas"></canvas>
       <canvas id="d-art-canvas"
@@ -343,7 +349,6 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
       </canvas>
       <canvas id="d-word-canvas"></canvas>
     </div>
-    <p class="d-hint" id="d-hint">👆 Pick a word above to start!</p>
   </div>
 </section>
 
@@ -512,8 +517,8 @@ document.getElementById('d-canvas-wrap').style.width=DCW+'px';
 document.getElementById('d-canvas-wrap').style.height=DCH+'px';
 
 const D_CONFIGS=[
-  {gridId:'d-grid-card-a', btnId:'d-card-btn-a',  get:()=>dCardColorA,  set:c=>{dCardColorA=c;dDrawCard();}},
-  {gridId:'d-grid-card-b', btnId:'d-card-btn-b',  get:()=>dCardColorB,  set:c=>{dCardColorB=c;dDrawCard();}},
+  {gridId:'d-grid-card-a', btnId:'d-card-btn-a',  get:()=>dCardColorA,  set:c=>{dCardColorA=c;dDrawCard();dSaveCardColors();}},
+  {gridId:'d-grid-card-b', btnId:'d-card-btn-b',  get:()=>dCardColorB,  set:c=>{dCardColorB=c;dDrawCard();dSaveCardColors();}},
   {gridId:'d-grid-brush-a',btnId:'d-brush-btn-a', get:()=>dBrushColorA, set:c=>{dBrushColorA=c;}},
   {gridId:'d-grid-brush-b',btnId:'d-brush-btn-b', get:()=>dBrushColorB, set:c=>{dBrushColorB=c;}},
 ];
@@ -552,11 +557,22 @@ function dCloseAllPalettes(){
 document.addEventListener('click',e=>{if(!e.target.closest('.d-color-wrap'))dCloseAllPalettes();});
 
 const dArtStore={};
+const dCardStore={};
+
 function dPickWord(word){
+  if(dCurrentWord) dCardStore[dCurrentWord]={a:dCardColorA,b:dCardColorB};
   dCurrentWord=word;
   document.querySelectorAll('.d-word-btn').forEach(b=>b.classList.remove('active'));
   document.querySelector(`.d-word-btn[data-w="${word}"]`).classList.add('active');
-  document.getElementById('d-hint').textContent='🖌 Paint all over it!';
+  document.getElementById('d-hint').style.display='none';
+  const tipEl=document.getElementById('d-tip');
+  tipEl.style.display='block';
+  tipEl.textContent=wordData[word].tip;
+  if(dCardStore[word]){
+    dCardColorA=dCardStore[word].a; dCardColorB=dCardStore[word].b;
+    document.getElementById('d-card-btn-a').style.background=dCardColorA;
+    document.getElementById('d-card-btn-b').style.background=dCardColorB;
+  }
   dDrawCard();dDrawWord();dLoadArt();
 }
 function dDrawCard(){
@@ -600,9 +616,13 @@ function dDoDraw(e){
 }
 function dStopDraw(){
   dPainting=false;if(!dCurrentWord)return;
-  const data=dArtCanvas.toDataURL('image/jpeg',0.4);
+  const data=dArtCanvas.toDataURL('image/png');
   dArtStore[dCurrentWord]=data;
   try{localStorage.setItem('ww_art_'+dCurrentWord,data);}catch(e){}
+}
+function dSaveCardColors(){
+  if(!dCurrentWord)return;
+  try{localStorage.setItem('ww_card_'+dCurrentWord,JSON.stringify({a:dCardColorA,b:dCardColorB}));}catch(e){}
 }
 function dStroke(x1,y1,x2,y2){
   dArtCtx.save();dArtCtx.lineCap='round';dArtCtx.lineJoin='round';
@@ -618,18 +638,32 @@ function dStroke(x1,y1,x2,y2){
 }
 function dLoadArt(){
   dArtCtx.clearRect(0,0,DCW,DCH);
+  // restore card colors from localStorage if not already in memory
+  if(!dCardStore[dCurrentWord]){
+    try{
+      const saved=localStorage.getItem('ww_card_'+dCurrentWord);
+      if(saved){
+        const parsed=JSON.parse(saved);
+        dCardColorA=parsed.a; dCardColorB=parsed.b;
+        document.getElementById('d-card-btn-a').style.background=dCardColorA;
+        document.getElementById('d-card-btn-b').style.background=dCardColorB;
+        dDrawCard();
+      }
+    }catch(e){}
+  }
   const data=dArtStore[dCurrentWord]||(()=>{try{return localStorage.getItem('ww_art_'+dCurrentWord);}catch(e){}})();
   if(data){const img=new Image();img.onload=()=>dArtCtx.drawImage(img,0,0);img.src=data;}
 }
 function dClearArt(){
   dArtCtx.clearRect(0,0,DCW,DCH);dOmbrePhase=0;
-  delete dArtStore[dCurrentWord];
-  try{localStorage.removeItem('ww_art_'+dCurrentWord);}catch(e){}
+  delete dArtStore[dCurrentWord];delete dCardStore[dCurrentWord];
+  try{localStorage.removeItem('ww_art_'+dCurrentWord);localStorage.removeItem('ww_card_'+dCurrentWord);}catch(e){}
 }
 function dSetTool(t){
   dTool=t;
   document.getElementById('d-btn-brush').classList.toggle('active-tool', t==='brush');
   document.getElementById('d-btn-eraser').classList.toggle('active-tool',t==='eraser');
+  dArtCanvas.style.cursor = t==='eraser' ? "url('erasor.cur'),cell" : "url('crayon.cur'),crosshair";
 }
 
 // ── CONFETTI ──
