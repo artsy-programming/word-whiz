@@ -115,7 +115,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .match-item:hover:not(.matched){transform:translateY(-3px);border-color:var(--teal);}
 .match-item.selected{border-color:var(--purple);background:#FAF0FF;transform:scale(1.04);}
 .match-item.matched{background:#F0FFF4;border-color:var(--green);color:#166534;pointer-events:none;}
-.match-item.wrong{border-color:var(--coral);background:#FFF0F0;animation:shake .35s;}
+.match-item.wrong{border-color:var(--yellow);background:#FFFBE6;animation:shake .35s;}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .match-win{display:none;text-align:center;padding:2rem;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
 .match-win.show{display:block;}
@@ -143,11 +143,11 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .choice-btn:hover:not(:disabled){transform:translateY(-4px);border-color:var(--purple);}
 .choice-btn:disabled{cursor:default;}
 .choice-btn.correct{background:#F0FFF4;border-color:var(--green);color:#166534;}
-.choice-btn.wrong{background:#FFF0F0;border-color:var(--coral);color:#991B1B;}
+.choice-btn.wrong{background:#FFFBE6;border-color:var(--yellow);color:#92620A;}
 .feedback-bubble{margin-top:1.2rem;padding:0.8rem 1.2rem;border-radius:14px;font-weight:800;font-size:1rem;display:none;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);line-height:1.5;}
 .feedback-bubble.show{display:block;}
 .feedback-bubble.correct{background:#ECFDF5;color:#065F46;}
-.feedback-bubble.wrong{background:#FEF2F2;color:#991B1B;}
+.feedback-bubble.wrong{background:#FFFBE6;color:#92620A;}
 .next-btn{display:none;margin:1rem auto 0;background:var(--purple);color:white;border:none;border-radius:50px;padding:0.9rem 2rem;font-family:'Fredoka One',cursive;font-size:1.3rem;cursor:pointer;box-shadow:0 5px 0 #7c3aed;transition:transform .15s;width:fit-content;}
 .next-btn.show{display:block;}
 .next-btn:hover{transform:translateY(-3px);}
@@ -206,6 +206,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 #d-art-canvas  { position:absolute;inset:0;z-index:1;display:block; }
 #d-word-canvas { position:relative;z-index:2;display:block;pointer-events:none; }
 .d-hint { text-align:center;font-weight:800;font-size:0.9rem;color:#9CA3AF; }
+.d-inspo { text-align:center;font-weight:700;font-size:0.88rem;color:#9CA3AF;line-height:1.5;max-width:420px;margin:0 auto; }
 
 /* ══ CONFETTI ══ */
 #confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;}
@@ -250,7 +251,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 <!-- MODE 1: LEARN -->
 <section id="learn" class="screen">
   <div class="top-bar">
-    <button class="back-btn" onclick="showScreen('home')">← Home</button>
+    <button class="back-btn" onclick="showScreen('home')">← Back</button>
     <span class="bar-title">🎬 Learn It!</span>
   </div>
   <div class="learn-body">
@@ -278,7 +279,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
   <div class="blob blob4"></div><div class="blob blob5"></div><div class="blob blob6"></div>
   <div class="blob blob7"></div><div class="blob blob8"></div>
   <div class="top-bar">
-    <button class="back-btn" onclick="showScreen('home')">← Home</button>
+    <button class="back-btn" onclick="showScreen('home')">← Back</button>
     <span class="bar-title">🃏 Match It!</span>
   </div>
   <div class="match-body">
@@ -303,7 +304,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
   <div class="blob blob4"></div><div class="blob blob5"></div><div class="blob blob6"></div>
   <div class="blob blob7"></div><div class="blob blob8"></div>
   <div class="top-bar">
-    <button class="back-btn" onclick="showScreen('home')">← Home</button>
+    <button class="back-btn" onclick="showScreen('home')">← Back</button>
     <span class="bar-title">🌟 Pick It!</span>
   </div>
   <div class="quiz-body">
@@ -330,7 +331,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 <!-- MODE 4: DESIGN -->
 <section id="design" class="screen">
   <div class="top-bar">
-    <button class="back-btn" onclick="showScreen('home')">← Home</button>
+    <button class="back-btn" onclick="showScreen('home')">← Back</button>
     <span class="bar-title">🎨 Design Your Own Flashcard!</span>
   </div>
   <div class="design-body">
@@ -378,6 +379,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
       </div>
     </div>
     <p class="d-hint" id="d-hint">👆 Pick a word above to start!</p>
+    <p class="d-inspo">✨ Try coloring it in, tracing the letters, or doodling something that helps you remember what the word means!</p>
     <div id="d-tip" style="display:none;background:white;border-radius:14px;padding:0.7rem 1rem;font-weight:800;font-size:0.95rem;color:#374151;box-shadow:0 3px 12px rgba(0,0,0,0.08);text-align:center;"></div>
     <div class="d-canvas-wrap" id="d-canvas-wrap">
       <canvas id="d-card-canvas"></canvas>
@@ -465,7 +467,7 @@ function checkMatch(){
 
 // ── MODE 3: QUIZ ──
 const allQ=[
-  {s:'I want to go ___ the park.',         a:'there',c:['there','their','to']},
+  {s:'We are going ___ the park.',          a:'to',    c:['there','their','to']},
   {s:'___ dog is really fluffy!',           a:'their', c:['their','there','too']},
   {s:'Can I come ___?',                     a:'too',   c:['to','too','two']},
   {s:'I have ___ best friends.',            a:'two',   c:['to','too','two']},
@@ -507,19 +509,27 @@ function renderQ(){
   document.getElementById('feedback').className='feedback-bubble';
   document.getElementById('next-btn').classList.remove('show');
 }
+const wordHints = {
+  to:    '"to" means going somewhere or doing something',
+  too:   '"too" means also, or very much',
+  two:   '"two" is the number 2',
+  their: '"their" means it belongs to them',
+  there: '"there" means a place or location',
+};
 function handleChoice(btn,chosen,correct,sentence){
   if(answered)return;answered=true;
   document.querySelectorAll('.choice-btn').forEach(b=>{b.disabled=true;if(b.textContent===correct)b.classList.add('correct');});
   if(chosen!==correct)btn.classList.add('wrong');
   const revealed=sentence.replace('___','"'+correct+'"');
+  const hint=wordHints[correct]||'';
   const fb=document.getElementById('feedback');
   if(chosen===correct){
     qScore++;document.getElementById('live-score').textContent=qScore;
     fb.className='feedback-bubble correct show';
-    fb.textContent=goodFb[Math.floor(Math.random()*goodFb.length)]+'  →  '+revealed;
+    fb.textContent=goodFb[Math.floor(Math.random()*goodFb.length)]+'  →  '+revealed+'  •  Remember: '+hint+'!';
   } else {
     fb.className='feedback-bubble wrong show';
-    fb.textContent=badFb[Math.floor(Math.random()*badFb.length)]+'  Correct: '+revealed;
+    fb.textContent='The answer is "'+correct+'" — '+hint+'!  →  '+revealed;
   }
   document.getElementById('next-btn').classList.add('show');
 }
