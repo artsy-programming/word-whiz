@@ -540,8 +540,8 @@ const dCardCanvas=document.getElementById('d-card-canvas');
 const dArtCanvas =document.getElementById('d-art-canvas');
 const dWordCanvas=document.getElementById('d-word-canvas');
 // set default cursor
-dArtCanvas.style.cursor = "url('crayon.png'), crosshair";
-document.getElementById('d-canvas-wrap').style.cursor = "url('crayon.png'), crosshair";
+dArtCanvas.style.cursor = "url('crayon.cur'), crosshair";
+document.getElementById('d-canvas-wrap').style.cursor = "url('crayon.cur'), crosshair";
 const dCardCtx=dCardCanvas.getContext('2d');
 const dArtCtx =dArtCanvas.getContext('2d');
 const dWordCtx=dWordCanvas.getContext('2d');
@@ -699,7 +699,7 @@ function dSetTool(t){
   dTool=t;
   document.getElementById('d-btn-brush').classList.toggle('active-tool', t==='brush');
   document.getElementById('d-btn-eraser').classList.toggle('active-tool',t==='eraser');
-  const cur = t==='eraser' ? "url('erasor.png'), cell" : "url('crayon.png'), crosshair";
+  const cur = t==='eraser' ? "url('eraser.cur'), cell" : "url('crayon.cur'), crosshair";
   dArtCanvas.style.cursor = cur;
   document.getElementById('d-canvas-wrap').style.cursor = cur;
 }
