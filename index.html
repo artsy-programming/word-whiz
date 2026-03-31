@@ -70,8 +70,8 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 
 /* ══ TOP BAR ══ */
 .top-bar { width:100%;display:flex;align-items:center;gap:1rem;padding:0.9rem 1.5rem;background:white;box-shadow:0 3px 12px rgba(0,0,0,0.08);position:sticky;top:0;z-index:50; }
-.back-btn { background:var(--coral);color:white;border:none;border-radius:50px;padding:0.5rem 1.2rem;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;transition:transform .15s,background .15s; }
-.back-btn:hover{transform:scale(1.06);background:#e05555;}
+.back-btn { background:#1E1B4B;color:white;border:none;border-radius:50px;padding:0.5rem 1.2rem;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;transition:transform .15s,background .15s; }
+.back-btn:hover{transform:scale(1.06);background:#0f0d2e;}
 .bar-title{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--navy);}
 
 /* ══ MODE 1 ══ */
@@ -109,13 +109,42 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .match-score-bar{display:flex;justify-content:center;margin-bottom:1.5rem;}
 .score-badge{background:white;border-radius:50px;padding:0.5rem 1.4rem;font-weight:900;font-size:1.1rem;color:var(--navy);box-shadow:0 3px 10px rgba(0,0,0,0.10);}
 .score-badge span{color:var(--teal)}
-.match-columns{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.match-col-label{font-family:'Fredoka One',cursive;font-size:1.05rem;text-align:center;color:#9CA3AF;margin-bottom:0.6rem;}
-.match-item{background:white;border:3px solid #E5E7EB;border-radius:16px;padding:0.9rem 1rem;text-align:center;cursor:pointer;font-weight:800;font-size:1rem;color:var(--navy);transition:transform .15s,border-color .15s,background .15s;box-shadow:0 3px 0 rgba(0,0,0,0.06);margin-bottom:0.7rem;user-select:none;line-height:1.3;}
-.match-item:hover:not(.matched){transform:translateY(-3px);border-color:var(--teal);}
-.match-item.selected{border-color:var(--purple);background:#FAF0FF;transform:scale(1.04);}
-.match-item.matched{background:#F0FFF4;border-color:var(--green);color:#166534;pointer-events:none;}
-.match-item.wrong{border-color:var(--yellow);background:#FFFBE6;animation:shake .35s;}
+.match-columns{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+.match-col-label{font-family:'Fredoka One',cursive;font-size:1rem;text-align:center;color:#9CA3AF;margin-bottom:0.7rem;letter-spacing:0.04em;}
+
+/* ── Word Cards (left column) ── */
+.match-item{cursor:pointer;user-select:none;margin-bottom:0.75rem;transition:transform .18s,box-shadow .18s;position:relative;}
+.word-card{background:white;border-radius:22px;border-top:5px solid #E5E7EB;padding:1.1rem 0.8rem 0.9rem;text-align:center;box-shadow:0 6px 0 rgba(0,0,0,0.09),0 2px 14px rgba(0,0,0,0.07);}
+.word-card .wc-emoji{font-size:1.4rem;display:block;margin-bottom:0.2rem;}
+.word-card .wc-word{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--navy);display:block;line-height:1;}
+
+/* ── Meaning Cards (right column) ── */
+.meaning-card{background:#F8F7FF;border:2px solid #E0D9F7;border-radius:22px;padding:1rem 0.9rem;text-align:center;box-shadow:0 4px 0 rgba(0,0,0,0.07),0 2px 10px rgba(0,0,0,0.05);display:flex;align-items:center;justify-content:center;min-height:78px;font-weight:800;font-size:0.92rem;color:#374151;line-height:1.4;}
+
+/* ── Hover / Selected / Wrong states ── */
+.match-item:hover:not(.matched):not(.word-card-gone):not(.meaning-card-gone){transform:translateY(-4px) scale(1.03);}
+.word-card:hover:not(.matched){box-shadow:0 10px 0 rgba(0,0,0,0.10),0 4px 20px rgba(0,0,0,0.12);}
+.meaning-card:hover:not(.matched){box-shadow:0 8px 0 rgba(0,0,0,0.09),0 4px 16px rgba(0,0,0,0.10);}
+.match-item.selected{transform:scale(1.06) translateY(-3px);}
+.word-card.selected{border-top-color:var(--purple);background:#FAF0FF;box-shadow:0 8px 0 rgba(0,0,0,0.10),0 0 0 3px #C084FC;}
+.meaning-card.selected{border-color:var(--purple);background:#FAF0FF;box-shadow:0 6px 0 rgba(0,0,0,0.08),0 0 0 3px #C084FC;}
+.match-item.wrong{animation:shake .35s;}
+.word-card.wrong{border-top-color:var(--coral);background:#FFF0F0;}
+.meaning-card.wrong{border-color:var(--coral);background:#FFF0F0;}
+
+/* ── Gone state (after fly animation) ── */
+.card-gone{opacity:0;pointer-events:none;transform:scale(0.85);transition:opacity 0.2s,transform 0.2s;}
+
+/* ── Matched pile ── */
+#matched-area{margin-top:1.4rem;display:none;}
+.matched-pile-label{font-family:'Fredoka One',cursive;font-size:1rem;color:var(--green);text-align:center;margin-bottom:0.6rem;}
+.matched-pile{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;}
+.pile-card{background:white;border:2.5px solid var(--green);border-radius:14px;padding:0.45rem 0.85rem;font-weight:900;font-size:0.88rem;color:#166534;display:flex;align-items:center;gap:0.4rem;box-shadow:0 3px 8px rgba(107,203,119,0.25);animation:pileIn .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes pileIn{from{opacity:0;transform:scale(0.5) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(0deg)}}
+
+/* ── Flying card clone (JS-positioned) ── */
+.fly-clone{position:fixed;z-index:9000;pointer-events:none;border-radius:22px;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:1.5rem;color:white;background:var(--green);box-shadow:0 8px 24px rgba(0,0,0,0.2);transition:all 0.55s cubic-bezier(.4,0,.2,1);}
+
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .match-win{display:none;text-align:center;padding:2rem;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
 .match-win.show{display:block;}
@@ -286,8 +315,12 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
     <div class="match-instructions"><h2>Match the word to its meaning! 🔗</h2><p>Tap a word on the left, then tap its meaning on the right</p></div>
     <div class="match-score-bar"><div class="score-badge">Matched: <span id="match-count">0</span> / 5</div></div>
     <div id="match-game" class="match-columns">
-      <div><div class="match-col-label">Word</div><div id="words-col"></div></div>
-      <div><div class="match-col-label">Meaning</div><div id="meanings-col"></div></div>
+      <div><div class="match-col-label">📝 Words</div><div id="words-col"></div></div>
+      <div><div class="match-col-label">💡 Meanings</div><div id="meanings-col"></div></div>
+    </div>
+    <div id="matched-area">
+      <div class="matched-pile-label">✅ Matched!</div>
+      <div class="matched-pile" id="matched-pile"></div>
     </div>
     <div id="match-win" class="match-win">
       <h2>You matched them all! 🎊</h2>
@@ -402,6 +435,7 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
+  if(id === 'design') setTimeout(dInitCanvas, 30);
 }
 
 // ── MODE 1: LEARN ──
@@ -432,6 +466,8 @@ const matchPairs=[
   {word:'their',meaning:'🎒 belongs to them'},
   {word:'there',meaning:'📍 a place or location'},
 ];
+const wordColors={to:'#FF6B6B',too:'#F59E0B',two:'#4ECDC4',their:'#C084FC',there:'#6BCB77'};
+const wordEmoji={to:'➡️',too:'😄',two:'✌️',their:'🎒',there:'📍'};
 let selWord=null,selMeaning=null,matchedCount=0;
 function shuffle(arr){return[...arr].sort(()=>Math.random()-.5);}
 function initMatch(){
@@ -439,33 +475,136 @@ function initMatch(){
   document.getElementById('match-count').textContent='0';
   document.getElementById('match-win').classList.remove('show');
   document.getElementById('match-game').style.display='grid';
+  document.getElementById('matched-area').style.display='none';
+  document.getElementById('matched-pile').innerHTML='';
   const wCol=document.getElementById('words-col'),mCol=document.getElementById('meanings-col');
   wCol.innerHTML='';mCol.innerHTML='';
   shuffle(matchPairs).forEach(p=>{
-    const el=document.createElement('div');el.className='match-item';el.dataset.word=p.word;
-    el.textContent=p.word;el.onclick=()=>selectItem(el,'word');wCol.appendChild(el);
+    const el=document.createElement('div');
+    el.className='match-item word-card';
+    el.dataset.word=p.word;
+    el.innerHTML=`<span class="wc-emoji">${wordEmoji[p.word]}</span><span class="wc-word">${p.word}</span>`;
+    el.style.borderTopColor=wordColors[p.word];
+    el.onclick=()=>selectItem(el,'word');
+    wCol.appendChild(el);
   });
   shuffle(matchPairs).forEach(p=>{
-    const el=document.createElement('div');el.className='match-item';el.dataset.word=p.word;
-    el.textContent=p.meaning;el.onclick=()=>selectItem(el,'meaning');mCol.appendChild(el);
+    const el=document.createElement('div');
+    el.className='match-item meaning-card';
+    el.dataset.word=p.word;
+    el.textContent=p.meaning;
+    el.onclick=()=>selectItem(el,'meaning');
+    mCol.appendChild(el);
   });
 }
 function selectItem(el,type){
-  if(el.classList.contains('matched'))return;
+  if(el.classList.contains('card-gone'))return;
   if(type==='word'){if(selWord)selWord.classList.remove('selected');selWord=el;el.classList.add('selected');}
   else{if(selMeaning)selMeaning.classList.remove('selected');selMeaning=el;el.classList.add('selected');}
   if(selWord&&selMeaning)checkMatch();
 }
 function checkMatch(){
   if(selWord.dataset.word===selMeaning.dataset.word){
-    selWord.classList.remove('selected');selWord.classList.add('matched');
-    selMeaning.classList.remove('selected');selMeaning.classList.add('matched');
-    matchedCount++;document.getElementById('match-count').textContent=matchedCount;selWord=null;selMeaning=null;
-    if(matchedCount===5){setTimeout(()=>{document.getElementById('match-game').style.display='none';document.getElementById('match-win').classList.add('show');launchConfetti();},400);}
+    const word=selWord.dataset.word;
+    selWord.classList.remove('selected');
+    selMeaning.classList.remove('selected');
+    const wEl=selWord, mEl=selMeaning;
+    selWord=null; selMeaning=null;
+    matchedCount++;
+    document.getElementById('match-count').textContent=matchedCount;
+    // fly animation
+    flyToPile(wEl, mEl, word);
+    if(matchedCount===5){
+      setTimeout(()=>{
+        document.getElementById('match-game').style.display='none';
+        document.getElementById('matched-area').style.display='none';
+        document.getElementById('match-win').classList.add('show');
+        launchConfetti();
+      },900);
+    }
   } else {
     selWord.classList.add('wrong');selMeaning.classList.add('wrong');
-    setTimeout(()=>{selWord.classList.remove('selected','wrong');selMeaning.classList.remove('selected','wrong');selWord=null;selMeaning=null;},600);
+    setTimeout(()=>{
+      selWord.classList.remove('selected','wrong');
+      selMeaning.classList.remove('selected','wrong');
+      selWord=null;selMeaning=null;
+    },600);
   }
+}
+function flyToPile(wEl, mEl, word){
+  const pileEl=document.getElementById('matched-pile');
+  const pileAreaEl=document.getElementById('matched-area');
+  pileAreaEl.style.display='block';
+
+  // Build the pile card first (hidden) so we can get its target position
+  const pileCard=document.createElement('div');
+  pileCard.className='pile-card';
+  pileCard.style.opacity='0';
+  pileCard.innerHTML=`${wordEmoji[word]} <strong>${word}</strong>`;
+  pileEl.appendChild(pileCard);
+
+  // Animate both cards
+  [wEl, mEl].forEach((el, i) => {
+    const srcRect=el.getBoundingClientRect();
+    const destRect=pileCard.getBoundingClientRect();
+
+    // Create flying clone
+    const clone=document.createElement('div');
+    clone.className='fly-clone';
+    clone.textContent= i===0 ? word : wordEmoji[word]+'✓';
+    clone.style.cssText=`
+      position:fixed;
+      left:${srcRect.left}px;top:${srcRect.top}px;
+      width:${srcRect.width}px;height:${srcRect.height}px;
+      background:${wordColors[word]};
+      border-radius:22px;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Fredoka One',cursive;font-size:1.4rem;color:white;
+      box-shadow:0 8px 24px rgba(0,0,0,0.2);
+      pointer-events:none;z-index:9000;
+      transition:none;
+    `;
+    document.body.appendChild(clone);
+
+    // Hide original
+    el.style.opacity='0';
+    el.style.transform='scale(0.85)';
+    el.style.transition='opacity 0.2s, transform 0.2s';
+    el.style.pointerEvents='none';
+
+    // Flip phase: scale up + rotate
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        clone.style.transition='all 0.28s cubic-bezier(.4,0,.2,1)';
+        clone.style.transform='scale(1.15) rotateY(90deg)';
+        clone.style.opacity='0.7';
+
+        setTimeout(()=>{
+          // mid-flip: update content and switch side
+          clone.style.transition='none';
+          clone.style.transform='scale(1.15) rotateY(-90deg)';
+          clone.style.background='var(--green)';
+          clone.textContent='✓';
+
+          requestAnimationFrame(()=>{
+            requestAnimationFrame(()=>{
+              // fly to pile
+              clone.style.transition='all 0.45s cubic-bezier(.4,0,.2,1)';
+              const tx=destRect.left - srcRect.left;
+              const ty=destRect.top - srcRect.top;
+              clone.style.transform=`translate(${tx}px,${ty}px) scale(0.4) rotateY(0deg)`;
+              clone.style.opacity='0';
+              setTimeout(()=>{
+                clone.remove();
+                // show pile card after last clone lands
+                if(i===1){ pileCard.style.opacity='1'; pileCard.style.animation='pileIn .4s cubic-bezier(.34,1.56,.64,1)'; }
+              }, 480);
+            });
+          });
+        }, 280);
+      });
+    });
+  });
 }
 
 // ── MODE 3: QUIZ ──
@@ -565,11 +704,17 @@ const dCardCtx=dCardCanvas.getContext('2d');
 const dArtCtx =dArtCanvas.getContext('2d');
 const dWordCtx=dWordCanvas.getContext('2d');
 
-const DCW=Math.min(window.innerWidth-32,640);
-const DCH=Math.round(DCW*0.5);
-[dCardCanvas,dArtCanvas,dWordCanvas].forEach(c=>{c.width=DCW;c.height=DCH;});
-document.getElementById('d-canvas-wrap').style.width=DCW+'px';
-document.getElementById('d-canvas-wrap').style.height=DCH+'px';
+let DCW=0, DCH=0;
+function dInitCanvas(){
+  const wrap=document.getElementById('d-canvas-wrap');
+  const newW=Math.min(wrap.parentElement.offsetWidth-8||window.innerWidth-32,640);
+  if(newW===DCW){dDrawCard();if(dCurrentWord){dDrawWord();dLoadArt();}return;}
+  DCW=newW; DCH=Math.round(DCW*0.5);
+  [dCardCanvas,dArtCanvas,dWordCanvas].forEach(c=>{c.width=DCW;c.height=DCH;});
+  wrap.style.width=DCW+'px'; wrap.style.height=DCH+'px';
+  dDrawCard(); if(dCurrentWord){dDrawWord();dLoadArt();}
+}
+dInitCanvas();
 
 const D_CONFIGS=[
   {gridId:'d-grid-card-a', btnId:'d-card-btn-a',  get:()=>dCardColorA,  set:c=>{dCardColorA=c;dDrawCard();dSaveCardColors();}},
@@ -646,7 +791,6 @@ function dDrawWord(){
   dWordCtx.shadowColor='transparent';dWordCtx.shadowBlur=0;dWordCtx.shadowOffsetY=0;
   dWordCtx.fillStyle='white';dWordCtx.fillText(dCurrentWord,DCW/2,DCH/2);
 }
-dDrawCard();
 
 function dLerp(a,b,t){
   const ah=parseInt(a.replace('#',''),16),bh=parseInt(b.replace('#',''),16);
