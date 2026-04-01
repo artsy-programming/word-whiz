@@ -461,14 +461,19 @@ body { font-family:'Nunito',sans-serif; background:#111111; min-height:100vh; ov
 
 <script>
 // ── SCREEN ROUTER ──
-function showScreen(id) {
-  // Stop any playing media before switching
+function stopAllMedia(){
   const vid = document.getElementById('learn-video');
-  if(vid){ vid.pause(); vid.src=''; }
-  const f1 = document.getElementById('yt-frame-1');
-  const f2 = document.getElementById('yt-frame-2');
-  if(f1) f1.src='';
-  if(f2) f2.src='';
+  if(vid){ vid.pause(); vid.src=''; vid.load(); }
+  ['yt-frame-1','yt-frame-2'].forEach(id=>{
+    const f = document.getElementById(id);
+    if(!f) return;
+    // tell YouTube to stop via postMessage, then wipe src
+    try{ f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}','*'); }catch(e){}
+    setTimeout(()=>{ f.src='about:blank'; },100);
+  });
+}
+function showScreen(id) {
+  stopAllMedia();
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
@@ -509,8 +514,8 @@ function showYT(word) {
   const vid = document.getElementById('learn-video');
   vid.pause(); vid.src='';
   document.getElementById('yt-tip').innerHTML = ytTips[word];
-  document.getElementById('yt-frame-1').src = `https://www.youtube.com/embed/${YT_IDS[0]}`;
-  document.getElementById('yt-frame-2').src = `https://www.youtube.com/embed/${YT_IDS[1]}`;
+  document.getElementById('yt-frame-1').src = `https://www.youtube.com/embed/${YT_IDS[0]}?enablejsapi=1`;
+  document.getElementById('yt-frame-2').src = `https://www.youtube.com/embed/${YT_IDS[1]}?enablejsapi=1`;
   const panel = document.getElementById('yt-panel');
   panel.classList.add('visible');
   panel.scrollIntoView({behavior:'smooth',block:'nearest'});
