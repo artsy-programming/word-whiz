@@ -497,7 +497,17 @@ const ytTips = {
   there:    '📍 <strong>there</strong> = a place or location  •  "Put it over THERE"',
   "they're":'🤝 <strong>they\'re</strong> = they are  •  "THEY\'RE going to the park!"',
 };
+function nukeIframes() {
+  document.querySelectorAll('.yt-wrap iframe').forEach(f => {
+    const fresh = document.createElement('iframe');
+    fresh.id = f.id;
+    fresh.allowFullscreen = true;
+    fresh.allow = 'autoplay; encrypted-media';
+    f.replaceWith(fresh);
+  });
+}
 function showVideo(word) {
+  nukeIframes();
   document.querySelectorAll('.word-pill').forEach(p => p.classList.remove('active'));
   document.querySelector(`.word-pill[data-word="${word}"]`).classList.add('active');
   const d = wordData[word];
@@ -505,9 +515,6 @@ function showVideo(word) {
   const label = document.getElementById('video-word-label');
   const tip   = document.getElementById('video-tip');
   const vid   = document.getElementById('learn-video');
-  // Kill any playing YouTube audio
-  document.getElementById('yt-frame-1').src = 'about:blank';
-  document.getElementById('yt-frame-2').src = 'about:blank';
   document.getElementById('yt-panel').classList.remove('visible');
   label.textContent = d.emoji + ' ' + word;
   label.style.color = d.color;
@@ -518,8 +525,11 @@ function showVideo(word) {
   panel.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 function showYT(word) {
+  nukeIframes();
   document.querySelectorAll('.word-pill').forEach(p => p.classList.remove('active'));
   document.querySelector(`.word-pill[data-word="${word}"]`).classList.add('active');
+  const vid = document.getElementById('learn-video');
+  vid.pause(); vid.src = ''; vid.load();
   document.getElementById('video-panel').classList.remove('visible');
   document.getElementById('yt-tip').innerHTML = ytTips[word];
   document.getElementById('yt-frame-1').src = `https://www.youtube.com/embed/${YT_IDS[0]}?enablejsapi=1`;
