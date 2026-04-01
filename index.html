@@ -462,6 +462,13 @@ body { font-family:'Nunito',sans-serif; background:#111111; min-height:100vh; ov
 <script>
 // ── SCREEN ROUTER ──
 function showScreen(id) {
+  // Stop any playing media before switching
+  const vid = document.getElementById('learn-video');
+  if(vid){ vid.pause(); vid.src=''; }
+  const f1 = document.getElementById('yt-frame-1');
+  const f2 = document.getElementById('yt-frame-2');
+  if(f1) f1.src='';
+  if(f2) f2.src='';
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
