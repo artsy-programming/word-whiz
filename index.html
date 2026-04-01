@@ -14,12 +14,12 @@
   --coral:#FF6B6B; --yellow:#FFD93D; --teal:#4ECDC4;
   --purple:#C084FC; --green:#6BCB77; --navy:#1E1B4B; --cream:#FFFBF0;
 }
-body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100vh; overflow-x:hidden; }
+body { font-family:'Nunito',sans-serif; background:#111111; min-height:100vh; overflow-x:hidden; }
 .screen { display:none; min-height:100vh; flex-direction:column; align-items:center; }
 .screen.active { display:flex; }
 
 /* ══ HOME ══ */
-#home { justify-content:center; padding:2rem; background:linear-gradient(135deg,#FFF9E6 0%,#FFF0F5 50%,#F0F8FF 100%); position:relative; overflow:hidden; }
+#home { justify-content:center; padding:2rem; background:linear-gradient(135deg,#111111 0%,#1a1025 50%,#0d1a1a 100%); position:relative; overflow:hidden; }
 .blob { position:absolute; border-radius:50%; pointer-events:none; }
 
 /* bubble effect: transparent center, colored edge, glossy shine */
@@ -28,7 +28,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
   position:absolute;
   inset:0;
   border-radius:50%;
-  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 40%, transparent 70%);
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 40%, transparent 70%);
   z-index:1;
 }
 .blob::after {
@@ -37,27 +37,27 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
   width:28%; height:14%;
   top:14%; left:20%;
   border-radius:50%;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.25);
   filter: blur(4px);
   z-index:2;
 }
 
-.blob1 { width:380px;height:380px;top:-140px;right:-80px;   background:radial-gradient(circle at 60% 40%, rgba(255,217,61,0.15), rgba(255,217,61,0.45) 60%, rgba(255,217,61,0.08));border:2px solid rgba(255,217,61,0.4);animation:blobFloat 6s ease-in-out infinite; }
-.blob2 { width:300px;height:300px;bottom:-80px;left:-70px;  background:radial-gradient(circle at 60% 40%, rgba(78,205,196,0.15), rgba(78,205,196,0.45) 60%, rgba(78,205,196,0.08));border:2px solid rgba(78,205,196,0.4);animation:blobFloat 7s ease-in-out infinite reverse; }
-.blob3 { width:200px;height:200px;top:40%;left:-50px;       background:radial-gradient(circle at 60% 40%, rgba(255,107,107,0.15), rgba(255,107,107,0.45) 60%, rgba(255,107,107,0.08));border:2px solid rgba(255,107,107,0.4);animation:blobFloat 5s ease-in-out infinite; }
-.blob4 { width:240px;height:240px;top:15%;left:10%;         background:radial-gradient(circle at 60% 40%, rgba(192,132,252,0.15), rgba(192,132,252,0.45) 60%, rgba(192,132,252,0.08));border:2px solid rgba(192,132,252,0.4);animation:blobFloat 8s ease-in-out infinite 1s; }
-.blob5 { width:180px;height:180px;bottom:10%;right:8%;      background:radial-gradient(circle at 60% 40%, rgba(107,203,119,0.15), rgba(107,203,119,0.45) 60%, rgba(107,203,119,0.08));border:2px solid rgba(107,203,119,0.4);animation:blobFloat 6.5s ease-in-out infinite reverse 0.5s; }
-.blob6 { width:140px;height:140px;top:60%;right:5%;         background:radial-gradient(circle at 60% 40%, rgba(251,146,60,0.15), rgba(251,146,60,0.45) 60%, rgba(251,146,60,0.08));border:2px solid rgba(251,146,60,0.4);animation:blobFloat 5.5s ease-in-out infinite 2s; }
-.blob7 { width:120px;height:120px;top:5%;right:22%;         background:radial-gradient(circle at 60% 40%, rgba(96,165,250,0.15), rgba(96,165,250,0.45) 60%, rgba(96,165,250,0.08));border:2px solid rgba(96,165,250,0.4);animation:blobFloat 9s ease-in-out infinite reverse 1.5s; }
-.blob8 { width:100px;height:100px;bottom:20%;left:15%;      background:radial-gradient(circle at 60% 40%, rgba(244,114,182,0.15), rgba(244,114,182,0.45) 60%, rgba(244,114,182,0.08));border:2px solid rgba(244,114,182,0.4);animation:blobFloat 7.5s ease-in-out infinite 0.8s; }
+.blob1 { width:380px;height:380px;top:-140px;right:-80px;   background:radial-gradient(circle at 60% 40%, rgba(255,217,61,0.08), rgba(255,217,61,0.30) 60%, rgba(255,217,61,0.04));border:2px solid rgba(255,217,61,0.5);animation:blobFloat 6s ease-in-out infinite; }
+.blob2 { width:300px;height:300px;bottom:-80px;left:-70px;  background:radial-gradient(circle at 60% 40%, rgba(78,205,196,0.08), rgba(78,205,196,0.30) 60%, rgba(78,205,196,0.04));border:2px solid rgba(78,205,196,0.5);animation:blobFloat 7s ease-in-out infinite reverse; }
+.blob3 { width:200px;height:200px;top:40%;left:-50px;       background:radial-gradient(circle at 60% 40%, rgba(255,107,107,0.08), rgba(255,107,107,0.30) 60%, rgba(255,107,107,0.04));border:2px solid rgba(255,107,107,0.5);animation:blobFloat 5s ease-in-out infinite; }
+.blob4 { width:240px;height:240px;top:15%;left:10%;         background:radial-gradient(circle at 60% 40%, rgba(192,132,252,0.08), rgba(192,132,252,0.30) 60%, rgba(192,132,252,0.04));border:2px solid rgba(192,132,252,0.5);animation:blobFloat 8s ease-in-out infinite 1s; }
+.blob5 { width:180px;height:180px;bottom:10%;right:8%;      background:radial-gradient(circle at 60% 40%, rgba(107,203,119,0.08), rgba(107,203,119,0.30) 60%, rgba(107,203,119,0.04));border:2px solid rgba(107,203,119,0.5);animation:blobFloat 6.5s ease-in-out infinite reverse 0.5s; }
+.blob6 { width:140px;height:140px;top:60%;right:5%;         background:radial-gradient(circle at 60% 40%, rgba(251,146,60,0.08), rgba(251,146,60,0.30) 60%, rgba(251,146,60,0.04));border:2px solid rgba(251,146,60,0.5);animation:blobFloat 5.5s ease-in-out infinite 2s; }
+.blob7 { width:120px;height:120px;top:5%;right:22%;         background:radial-gradient(circle at 60% 40%, rgba(96,165,250,0.08), rgba(96,165,250,0.30) 60%, rgba(96,165,250,0.04));border:2px solid rgba(96,165,250,0.5);animation:blobFloat 9s ease-in-out infinite reverse 1.5s; }
+.blob8 { width:100px;height:100px;bottom:20%;left:15%;      background:radial-gradient(circle at 60% 40%, rgba(244,114,182,0.08), rgba(244,114,182,0.30) 60%, rgba(244,114,182,0.04));border:2px solid rgba(244,114,182,0.5);animation:blobFloat 7.5s ease-in-out infinite 0.8s; }
 
 @keyframes blobFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-20px) scale(1.04)} }
 .home-inner { position:relative;z-index:1;text-align:center;max-width:960px;width:100%; }
 .home-star { font-size:5rem;display:block;animation:spin 5s linear infinite;margin-bottom:0.2rem; }
 @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-.logo { font-family:'Fredoka One',cursive;font-size:clamp(3rem,9vw,6rem);color:var(--navy);line-height:1;margin-bottom:0.3rem; }
+.logo { font-family:'Fredoka One',cursive;font-size:clamp(3rem,9vw,6rem);color:white;line-height:1;margin-bottom:0.3rem; }
 .logo .w1{color:var(--coral)} .logo .w2{color:var(--teal)} .logo .w3{color:var(--purple)}
-.tagline { font-size:clamp(1rem,3vw,1.25rem);font-weight:800;color:#6B7280;margin-bottom:2.5rem; }
+.tagline { font-size:clamp(1rem,3vw,1.25rem);font-weight:800;color:rgba(255,255,255,0.7);margin-bottom:2.5rem; }
 .mode-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem;width:100%; }
 .mode-card { background:white;border-radius:24px;padding:1.8rem 1.4rem;cursor:pointer;border:none;box-shadow:0 6px 0 rgba(0,0,0,0.09),0 2px 16px rgba(0,0,0,0.07);transition:transform .15s,box-shadow .15s;text-align:center; }
 .mode-card:hover { transform:translateY(-6px);box-shadow:0 12px 0 rgba(0,0,0,0.10),0 4px 24px rgba(0,0,0,0.12); }
@@ -69,17 +69,17 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .mode-desc  { font-size:0.85rem;font-weight:700;color:#9CA3AF;display:block;margin-top:0.3rem; }
 
 /* ══ TOP BAR ══ */
-.top-bar { width:100%;display:flex;align-items:center;gap:1rem;padding:0.9rem 1.5rem;background:white;box-shadow:0 3px 12px rgba(0,0,0,0.08);position:sticky;top:0;z-index:50; }
-.back-btn { background:#1E1B4B;color:white;border:none;border-radius:50px;padding:0.5rem 1.2rem;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;transition:transform .15s,background .15s; }
-.back-btn:hover{transform:scale(1.06);background:#0f0d2e;}
-.bar-title{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--navy);}
+.top-bar { width:100%;display:flex;align-items:center;gap:1rem;padding:0.9rem 1.5rem;background:#1a1a2e;box-shadow:0 3px 12px rgba(0,0,0,0.3);position:sticky;top:0;z-index:50; }
+.back-btn { background:rgba(255,255,255,0.12);color:white;border:none;border-radius:50px;padding:0.5rem 1.2rem;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;transition:transform .15s,background .15s; }
+.back-btn:hover{transform:scale(1.06);background:rgba(255,255,255,0.22);}
+.bar-title{font-family:'Fredoka One',cursive;font-size:1.4rem;color:white;}
 
 /* ══ MODE 1 ══ */
-#learn{background:linear-gradient(180deg,#F0F9FF 0%,#FFF9E6 100%);}
-.learn-body{padding:2rem 1.5rem;width:100%;max-width:900px;}
+#learn{background:linear-gradient(135deg,#111111 0%,#1a1025 50%,#0d1a1a 100%);position:relative;overflow:hidden;}
+.learn-body{padding:2rem 1.5rem;width:100%;max-width:900px;position:relative;z-index:1;}
 .learn-intro{text-align:center;margin-bottom:1.8rem;}
-.learn-intro h2{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--navy);}
-.learn-intro p{font-weight:700;color:#6B7280;margin-top:0.3rem;}
+.learn-intro h2{font-family:'Fredoka One',cursive;font-size:2rem;color:white;}
+.learn-intro p{font-weight:700;color:rgba(255,255,255,0.6);margin-top:0.3rem;}
 .word-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;margin-bottom:2rem;}
 .word-pill{background:white;border:3px solid transparent;border-radius:18px;padding:1.2rem 1rem;text-align:center;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,0.08);transition:transform .15s,box-shadow .15s;font-family:'Fredoka One',cursive;font-size:1.6rem;color:var(--navy);}
 .word-pill:hover{transform:translateY(-4px);box-shadow:0 8px 0 rgba(0,0,0,0.10);}
@@ -90,7 +90,9 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .word-pill[data-word="there"]{border-color:var(--green)}
 .word-pill[data-word="to"].active{background:#FFF0F0} .word-pill[data-word="too"].active{background:#FFFBE6}
 .word-pill[data-word="two"].active{background:#F0FFFE} .word-pill[data-word="their"].active{background:#FAF0FF}
-.word-pill[data-word="there"].active{background:#F0FFF4}
+.word-pill[data-word="there"].active{background:#F0FFF4} .word-pill[data-word="they're"].active{background:#FFF4E6}
+.word-pill[data-word="their"]{border-color:var(--purple)} .word-pill[data-word="there"]{border-color:var(--green)}
+.word-pill[data-word="they're"]{border-color:#FB923C}
 .video-panel{background:white;border-radius:24px;padding:1.5rem;box-shadow:0 6px 24px rgba(0,0,0,0.10);display:none;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);}
 .video-panel.visible{display:block;}
 @keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
@@ -99,18 +101,27 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .video-tip{background:#F3F4F6;border-radius:12px;padding:0.6rem 1rem;font-weight:800;font-size:0.95rem;color:#374151;flex:1;min-width:200px;}
 .video-wrap{width:100%;max-width:400px;margin:0 auto;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:1/1;}
 .video-wrap video{width:100%;height:100%;display:block;}
+/* ── YouTube Panel (their / there / they're) ── */
+.yt-panel{background:white;border-radius:24px;padding:1.5rem;box-shadow:0 6px 24px rgba(0,0,0,0.10);display:none;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);}
+.yt-panel.visible{display:block;}
+.yt-group-label{font-family:'Fredoka One',cursive;font-size:1.5rem;color:var(--navy);margin-bottom:0.6rem;text-align:center;}
+.yt-tip-box{background:#F3F4F6;border-radius:12px;padding:0.7rem 1rem;font-weight:800;font-size:0.95rem;color:#374151;margin-bottom:1.1rem;text-align:center;}
+.yt-videos{display:flex;flex-direction:column;gap:1rem;}
+.yt-vid-label{font-family:'Fredoka One',cursive;font-size:0.92rem;color:#9CA3AF;text-align:center;margin-bottom:0.35rem;}
+.yt-wrap{border-radius:16px;overflow:hidden;background:#000;aspect-ratio:16/9;}
+.yt-wrap iframe{width:100%;height:100%;display:block;border:none;}
 
 /* ══ MODE 2 ══ */
-#match{background:linear-gradient(180deg,#F5F0FF 0%,#F0FFF8 100%);position:relative;overflow:hidden;}
+#match{background:linear-gradient(135deg,#111111 0%,#1a1025 50%,#0d1a1a 100%);position:relative;overflow:hidden;}
 .match-body{padding:2rem 1.5rem;width:100%;max-width:800px;position:relative;z-index:1;}
 .match-instructions{text-align:center;margin-bottom:1.5rem;}
-.match-instructions h2{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--navy);}
-.match-instructions p{font-weight:700;color:#6B7280;margin-top:0.3rem;}
+.match-instructions h2{font-family:'Fredoka One',cursive;font-size:2rem;color:white;}
+.match-instructions p{font-weight:700;color:rgba(255,255,255,0.6);margin-top:0.3rem;}
 .match-score-bar{display:flex;justify-content:center;margin-bottom:1.5rem;}
-.score-badge{background:white;border-radius:50px;padding:0.5rem 1.4rem;font-weight:900;font-size:1.1rem;color:var(--navy);box-shadow:0 3px 10px rgba(0,0,0,0.10);}
+.score-badge{background:rgba(255,255,255,0.1);border-radius:50px;padding:0.5rem 1.4rem;font-weight:900;font-size:1.1rem;color:white;box-shadow:0 3px 10px rgba(0,0,0,0.3);}
 .score-badge span{color:var(--teal)}
 .match-columns{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
-.match-col-label{font-family:'Fredoka One',cursive;font-size:1rem;text-align:center;color:#9CA3AF;margin-bottom:0.7rem;letter-spacing:0.04em;}
+.match-col-label{font-family:'Fredoka One',cursive;font-size:1rem;text-align:center;color:rgba(255,255,255,0.5);margin-bottom:0.7rem;letter-spacing:0.04em;}
 
 /* ── Word Cards (left column) ── */
 .match-item{cursor:pointer;user-select:none;margin-bottom:0.75rem;transition:transform .18s,box-shadow .18s;position:relative;}
@@ -148,20 +159,20 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .match-win{display:none;text-align:center;padding:2rem;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
 .match-win.show{display:block;}
-.match-win h2{font-family:'Fredoka One',cursive;font-size:2.5rem;color:var(--navy);}
+.match-win h2{font-family:'Fredoka One',cursive;font-size:2.5rem;color:white;}
 .big-emoji{font-size:5rem;display:block;margin:1rem 0;animation:floatAnim 2s ease-in-out infinite;}
 @keyframes floatAnim{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 .play-again-btn{background:var(--teal);color:white;border:none;border-radius:50px;padding:0.9rem 2.5rem;font-family:'Fredoka One',cursive;font-size:1.4rem;cursor:pointer;box-shadow:0 5px 0 #2d9e97;transition:transform .15s;margin-top:1rem;display:inline-block;}
 .play-again-btn:hover{transform:translateY(-3px);}
 
 /* ══ MODE 3 ══ */
-#quiz{background:linear-gradient(180deg,#FFF0F5 0%,#F0F8FF 100%);position:relative;overflow:hidden;}
+#quiz{background:linear-gradient(135deg,#111111 0%,#1a1025 50%,#0d1a1a 100%);position:relative;overflow:hidden;}
 .quiz-body{padding:2rem 1.5rem;width:100%;max-width:760px;position:relative;z-index:1;}
 .quiz-progress{display:flex;align-items:center;gap:0.8rem;margin-bottom:1.2rem;}
-.progress-bar-wrap{flex:1;background:#E5E7EB;border-radius:50px;height:14px;overflow:hidden;}
+.progress-bar-wrap{flex:1;background:rgba(255,255,255,0.15);border-radius:50px;height:14px;overflow:hidden;}
 .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--coral),var(--purple));border-radius:50px;transition:width .4s ease;}
-.progress-text{font-weight:900;color:var(--navy);font-size:0.95rem;white-space:nowrap;}
-.quiz-score-live{text-align:center;font-weight:900;font-size:1rem;color:#6B7280;margin-bottom:1.2rem;}
+.progress-text{font-weight:900;color:white;font-size:0.95rem;white-space:nowrap;}
+.quiz-score-live{text-align:center;font-weight:900;font-size:1rem;color:rgba(255,255,255,0.7);margin-bottom:1.2rem;}
 .quiz-score-live span{color:var(--green);font-size:1.3rem;}
 .question-card{background:white;border-radius:24px;padding:2rem;box-shadow:0 6px 0 rgba(0,0,0,0.08),0 2px 20px rgba(0,0,0,0.07);margin-bottom:1.5rem;text-align:center;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);}
 .question-num{font-size:0.78rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.8rem;}
@@ -182,14 +193,14 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .next-btn:hover{transform:translateY(-3px);}
 .quiz-end{display:none;text-align:center;padding:2rem 1rem;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
 .quiz-end.show{display:block;}
-.quiz-end h2{font-family:'Fredoka One',cursive;font-size:2.5rem;color:var(--navy);}
-.end-score{font-size:1.4rem;font-weight:900;color:#6B7280;margin:0.8rem 0 1rem;}
+.quiz-end h2{font-family:'Fredoka One',cursive;font-size:2.5rem;color:white;}
+.end-score{font-size:1.4rem;font-weight:900;color:rgba(255,255,255,0.7);margin:0.8rem 0 1rem;}
 .end-score span{color:var(--purple);font-size:2rem;}
 .quiz-restart-btn{background:var(--coral);color:white;border:none;border-radius:50px;padding:0.9rem 2.5rem;font-family:'Fredoka One',cursive;font-size:1.4rem;cursor:pointer;box-shadow:0 5px 0 #c0392b;transition:transform .15s;}
 .quiz-restart-btn:hover{transform:translateY(-3px);}
 
 /* ══ MODE 4: DESIGN ══ */
-#design { background:linear-gradient(180deg,#FFFBE6 0%,#F5F0FF 100%);position:relative;overflow:hidden; }
+#design { background:linear-gradient(135deg,#111111 0%,#1a1025 50%,#0d1a1a 100%);position:relative;overflow:hidden; }
 .design-body { padding:1.4rem 1rem 2rem;width:100%;max-width:660px;display:flex;flex-direction:column;gap:1rem;position:relative;z-index:1; }
 
 .d-word-picker { display:flex;flex-wrap:wrap;gap:0.55rem;justify-content:center; }
@@ -228,14 +239,14 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 .d-btn.d-clear     { background:#FFF0F0;border-color:var(--coral);color:#CC2222; }
 .d-btn.d-clear:hover { background:#FFE0E0; }
 
-.site-logo { max-width: min(420px, 90vw); height: auto; margin-bottom: 0.6rem; }
-.big-word { font-family:'Fredoka One',cursive; font-size:1.5em; color:var(--navy); }
+.site-logo { max-width: min(420px, 90vw); height: auto; margin-bottom: 0.6rem; filter: invert(1); }
+.big-word { font-family:'Fredoka One',cursive; font-size:1.5em; color:white; }
 .d-canvas-wrap { position:relative;border-radius:24px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.14); }
 #d-card-canvas { position:absolute;inset:0;z-index:0;display:block; }
 #d-art-canvas  { position:absolute;inset:0;z-index:1;display:block; }
 #d-word-canvas { position:relative;z-index:2;display:block;pointer-events:none; }
-.d-hint { text-align:center;font-weight:800;font-size:0.9rem;color:#9CA3AF; }
-.d-inspo { text-align:center;font-weight:700;font-size:0.88rem;color:#9CA3AF;line-height:1.5;max-width:420px;margin:0 auto; }
+.d-hint { text-align:center;font-weight:800;font-size:0.9rem;color:rgba(255,255,255,0.5); }
+.d-inspo { text-align:center;font-weight:700;font-size:0.88rem;color:rgba(255,255,255,0.4);line-height:1.5;max-width:420px;margin:0 auto; }
 
 /* ══ CONFETTI ══ */
 #confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;}
@@ -255,7 +266,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
       <span class="home-star">⭐</span>
       <h1 class="logo"><span class="w1">Word</span> <span class="w2">Whi</span><span class="w3">z!</span></h1>
     </div>
-    <p class="tagline">Learn <span class="big-word">to</span>, <span class="big-word">too</span>, <span class="big-word">two</span>, <span class="big-word">their</span> &amp; <span class="big-word">there</span> the fun way 🫠 </p>
+    <p class="tagline">Learn <span class="big-word">to</span>, <span class="big-word">too</span>, <span class="big-word">two</span>, <span class="big-word">their</span>, <span class="big-word">there</span> &amp; <span class="big-word">they're</span> the fun way 🫠 </p>
     <div class="mode-grid">
       <button class="mode-card c1" onclick="showScreen('learn')">
         <span class="mode-icon">🎬</span><span class="mode-num">Mode 1</span>
@@ -279,6 +290,9 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
 
 <!-- MODE 1: LEARN -->
 <section id="learn" class="screen">
+  <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
+  <div class="blob blob4"></div><div class="blob blob5"></div><div class="blob blob6"></div>
+  <div class="blob blob7"></div><div class="blob blob8"></div>
   <div class="top-bar">
     <button class="back-btn" onclick="showScreen('home')">← Back</button>
     <span class="bar-title">🎬 Learn It!</span>
@@ -286,11 +300,12 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
   <div class="learn-body">
     <div class="learn-intro"><h2>Pick a word to learn! 👇</h2><p>Tap any word below to watch its video</p></div>
     <div class="word-grid">
-      <button class="word-pill" data-word="to"    onclick="showVideo('to')">   <span class="pill-emoji">➡️</span>to    </button>
-      <button class="word-pill" data-word="too"   onclick="showVideo('too')">  <span class="pill-emoji">😄</span>too   </button>
-      <button class="word-pill" data-word="two"   onclick="showVideo('two')">  <span class="pill-emoji">✌️</span>two   </button>
-      <button class="word-pill" data-word="their" onclick="showVideo('their')"><span class="pill-emoji">🎒</span>their </button>
-      <button class="word-pill" data-word="there" onclick="showVideo('there')"><span class="pill-emoji">📍</span>there </button>
+      <button class="word-pill" data-word="to"      onclick="showVideo('to')">     <span class="pill-emoji">➡️</span>to      </button>
+      <button class="word-pill" data-word="too"     onclick="showVideo('too')">    <span class="pill-emoji">😄</span>too     </button>
+      <button class="word-pill" data-word="two"     onclick="showVideo('two')">    <span class="pill-emoji">✌️</span>two     </button>
+      <button class="word-pill" data-word="their"   onclick="showYT('their')">     <span class="pill-emoji">🎒</span>their   </button>
+      <button class="word-pill" data-word="there"   onclick="showYT('there')">     <span class="pill-emoji">📍</span>there   </button>
+      <button class="word-pill" data-word="they're" onclick="showYT('they\'re')">  <span class="pill-emoji">🤝</span>they're </button>
     </div>
     <div id="video-panel" class="video-panel">
       <div class="video-header">
@@ -298,6 +313,20 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
         <div id="video-tip" class="video-tip"></div>
       </div>
       <div class="video-wrap"><video id="learn-video" controls playsinline>Your browser does not support video.</video></div>
+    </div>
+    <div id="yt-panel" class="yt-panel">
+      <div class="yt-group-label">🎒 their &nbsp;•&nbsp; 📍 there &nbsp;•&nbsp; 🤝 they're</div>
+      <div id="yt-tip" class="yt-tip-box"></div>
+      <div class="yt-videos">
+        <div>
+          <div class="yt-vid-label">📺 Video 1</div>
+          <div class="yt-wrap"><iframe id="yt-frame-1" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe></div>
+        </div>
+        <div>
+          <div class="yt-vid-label">📺 Video 2</div>
+          <div class="yt-wrap"><iframe id="yt-frame-2" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -313,7 +342,7 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
   </div>
   <div class="match-body">
     <div class="match-instructions"><h2>Match the word to its meaning! 🔗</h2><p>Tap a word on the left, then tap its meaning on the right</p></div>
-    <div class="match-score-bar"><div class="score-badge">Matched: <span id="match-count">0</span> / 5</div></div>
+    <div class="match-score-bar"><div class="score-badge">Matched: <span id="match-count">0</span> / 6</div></div>
     <div id="match-game" class="match-columns">
       <div><div class="match-col-label">📝 Words</div><div id="words-col"></div></div>
       <div><div class="match-col-label">💡 Meanings</div><div id="meanings-col"></div></div>
@@ -372,11 +401,12 @@ body { font-family:'Nunito',sans-serif; background:var(--cream); min-height:100v
   </div>
   <div class="design-body">
     <div class="d-word-picker">
-      <button class="d-word-btn" data-w="to"    onclick="dPickWord('to')">to</button>
-      <button class="d-word-btn" data-w="too"   onclick="dPickWord('too')">too</button>
-      <button class="d-word-btn" data-w="two"   onclick="dPickWord('two')">two</button>
-      <button class="d-word-btn" data-w="their" onclick="dPickWord('their')">their</button>
-      <button class="d-word-btn" data-w="there" onclick="dPickWord('there')">there</button>
+      <button class="d-word-btn" data-w="to"      onclick="dPickWord('to')">to</button>
+      <button class="d-word-btn" data-w="too"     onclick="dPickWord('too')">too</button>
+      <button class="d-word-btn" data-w="two"     onclick="dPickWord('two')">two</button>
+      <button class="d-word-btn" data-w="their"   onclick="dPickWord('their')">their</button>
+      <button class="d-word-btn" data-w="there"   onclick="dPickWord('there')">there</button>
+      <button class="d-word-btn" data-w="they're" onclick="dPickWord('they\'re')">they're</button>
     </div>
     <div class="d-toolbar">
       <div class="d-tool-row">
@@ -440,11 +470,18 @@ function showScreen(id) {
 
 // ── MODE 1: LEARN ──
 const wordData = {
-  to:    {emoji:'➡️', color:'#FF6B6B', tip:'"to" = going somewhere or doing something  •  "I want TO go to the park!"'},
-  too:   {emoji:'😄', color:'#F59E0B', tip:'"too" = also OR very much  •  "Me TOO!"  /  "That\'s TOO loud!"'},
-  two:   {emoji:'✌️', color:'#4ECDC4', tip:'"two" = the number 2  •  "I have TWO cats"'},
-  their: {emoji:'🎒', color:'#C084FC', tip:'"their" = belongs to them  •  "THEIR backpack is blue"'},
-  there: {emoji:'📍', color:'#6BCB77', tip:'"there" = a place or location  •  "Put it over THERE"'},
+  to:      {emoji:'➡️',  color:'#FF6B6B', tip:'"to" = going somewhere or doing something  •  "I want TO go to the park!"'},
+  too:     {emoji:'😄',  color:'#F59E0B', tip:'"too" = also OR very much  •  "Me TOO!"  /  "That\'s TOO loud!"'},
+  two:     {emoji:'✌️',  color:'#4ECDC4', tip:'"two" = the number 2  •  "I have TWO cats"'},
+  their:   {emoji:'🎒',  color:'#C084FC', tip:'"their" = belongs to them  •  "THEIR backpack is blue"'},
+  there:   {emoji:'📍',  color:'#6BCB77', tip:'"there" = a place or location  •  "Put it over THERE"'},
+  "they're":{emoji:'🤝', color:'#FB923C', tip:'"they\'re" = they are  •  "THEY\'RE going to the park!"'},
+};
+const YT_IDS = ['Jw4IjeGPaz0','3OjweUfHZ90'];
+const ytTips = {
+  their:   '🎒 <strong>their</strong> = belongs to them  •  "THEIR backpack is blue"',
+  there:   '📍 <strong>there</strong> = a place or location  •  "Put it over THERE"',
+  "they're":'🤝 <strong>they\'re</strong> = they are  •  "THEY\'RE going to the park!"',
 };
 function showVideo(word) {
   document.querySelectorAll('.word-pill').forEach(p => p.classList.remove('active'));
@@ -452,22 +489,37 @@ function showVideo(word) {
   const d=wordData[word], panel=document.getElementById('video-panel'),
         label=document.getElementById('video-word-label'),
         tip=document.getElementById('video-tip'), vid=document.getElementById('learn-video');
+  document.getElementById('yt-panel').classList.remove('visible');
   label.textContent=d.emoji+' '+word; label.style.color=d.color;
   tip.textContent=d.tip; vid.src=word+'.mp4'; vid.load(); vid.play();
+  panel.classList.add('visible');
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function showYT(word) {
+  document.querySelectorAll('.word-pill').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.word-pill[data-word="${word}"]`).classList.add('active');
+  document.getElementById('video-panel').classList.remove('visible');
+  const vid = document.getElementById('learn-video');
+  vid.pause(); vid.src='';
+  document.getElementById('yt-tip').innerHTML = ytTips[word];
+  document.getElementById('yt-frame-1').src = `https://www.youtube.com/embed/${YT_IDS[0]}`;
+  document.getElementById('yt-frame-2').src = `https://www.youtube.com/embed/${YT_IDS[1]}`;
+  const panel = document.getElementById('yt-panel');
   panel.classList.add('visible');
   panel.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 // ── MODE 2: MATCH ──
 const matchPairs=[
-  {word:'to',   meaning:'going / doing something'},
-  {word:'too',  meaning:'also, or very much'},
-  {word:'two',  meaning:'the number 2'},
-  {word:'their',meaning:'belongs to them'},
-  {word:'there',meaning:'a place or location'},
+  {word:'to',      meaning:'going / doing something'},
+  {word:'too',     meaning:'also, or very much'},
+  {word:'two',     meaning:'the number 2'},
+  {word:'their',   meaning:'belongs to them'},
+  {word:'there',   meaning:'a place or location'},
+  {word:"they're", meaning:'they are'},
 ];
-const wordColors={to:'#FF6B6B',too:'#F59E0B',two:'#4ECDC4',their:'#C084FC',there:'#6BCB77'};
-const wordEmoji={to:'➡️',too:'😄',two:'✌️',their:'🎒',there:'📍'};
+const wordColors={to:'#FF6B6B',too:'#F59E0B',two:'#4ECDC4',their:'#C084FC',there:'#6BCB77',"they're":'#FB923C'};
+const wordEmoji={to:'➡️',too:'😄',two:'✌️',their:'🎒',there:'📍',"they're":'🤝'};
 let selWord=null,selMeaning=null,matchedCount=0;
 function shuffle(arr){return[...arr].sort(()=>Math.random()-.5);}
 function initMatch(){
@@ -514,7 +566,7 @@ function checkMatch(){
     document.getElementById('match-count').textContent=matchedCount;
     // fly animation
     flyToPile(wEl, mEl, word);
-    if(matchedCount===5){
+    if(matchedCount===6){
       setTimeout(()=>{
         document.getElementById('match-game').style.display='none';
         document.getElementById('matched-area').style.display='none';
@@ -609,21 +661,26 @@ function flyToPile(wEl, mEl, word){
 
 // ── MODE 3: QUIZ ──
 const allQ=[
-  {s:'We are going ___ the park.',          a:'to',    c:['there','their','to']},
-  {s:'___ dog is really fluffy!',           a:'their', c:['their','there','too']},
-  {s:'Can I come ___?',                     a:'too',   c:['to','too','two']},
-  {s:'I have ___ best friends.',            a:'two',   c:['to','too','two']},
-  {s:'She walked ___ the store.',           a:'to',    c:['to','too','two']},
-  {s:'The cats are sleeping over ___.',     a:'there', c:['their','there','too']},
-  {s:'The kids left ___ backpacks here.',   a:'their', c:['there','their','to']},
-  {s:'That ice cream is ___ yummy!',        a:'too',   c:['to','too','two']},
-  {s:'We need ___ more eggs for the cake.', a:'two',   c:['to','too','two']},
-  {s:'Put the book right ___.',             a:'there', c:['their','there','too']},
-  {s:'I want ___ learn new words.',         a:'to',    c:['to','too','two']},
-  {s:'The birds built ___ nest.',           a:'their', c:['there','their','too']},
-  {s:'Is anyone sitting ___?',             a:'there', c:['their','there','to']},
-  {s:'She is ___ tired to play.',           a:'too',   c:['to','too','two']},
-  {s:'My ___ brothers are really tall.',    a:'two',   c:['to','too','two']},
+  {s:'We are going ___ the park.',               a:'to',       c:['there','their','to']},
+  {s:'___ dog is really fluffy!',                a:'their',    c:['their','there','too']},
+  {s:'Can I come ___?',                          a:'too',      c:['to','too','two']},
+  {s:'I have ___ best friends.',                 a:'two',      c:['to','too','two']},
+  {s:'She walked ___ the store.',                a:'to',       c:['to','too','two']},
+  {s:'The cats are sleeping over ___.',          a:'there',    c:['their','there','too']},
+  {s:'The kids left ___ backpacks here.',        a:'their',    c:['there','their','to']},
+  {s:'That ice cream is ___ yummy!',             a:'too',      c:['to','too','two']},
+  {s:'We need ___ more eggs for the cake.',      a:'two',      c:['to','too','two']},
+  {s:'Put the book right ___.',                  a:'there',    c:['their','there','too']},
+  {s:'I want ___ learn new words.',              a:'to',       c:['to','too','two']},
+  {s:'The birds built ___ nest.',                a:'their',    c:['there','their','too']},
+  {s:'Is anyone sitting ___?',                   a:'there',    c:['their','there','to']},
+  {s:'She is ___ tired to play.',                a:'too',      c:['to','too','two']},
+  {s:'My ___ brothers are really tall.',         a:'two',      c:['to','too','two']},
+  {s:'___ going to be so much fun!',             a:"they're",  c:["they're",'their','there']},
+  {s:'I hope ___ ready for the test.',           a:"they're",  c:["they're",'their','there']},
+  {s:'Look at the dogs — ___ so cute!',          a:"they're",  c:["they're",'their','there']},
+  {s:'___ always late to everything.',           a:"they're",  c:["they're",'their','too']},
+  {s:'Do you think ___ coming to the party?',    a:"they're",  c:["they're",'their','there']},
 ];
 const goodFb=['Great job! 🌟','You got it! 🎉','Amazing! ⭐','Correct! 🥳','Wow, nice! 🎊'];
 const badFb=['Not quite — keep going! 💪','Oops! You\'ll get it next time 🧠','Almost! Keep trying! 😊'];
@@ -652,11 +709,12 @@ function renderQ(){
   document.getElementById('next-btn').classList.remove('show');
 }
 const wordHints = {
-  to:    '"to" means going somewhere or doing something',
-  too:   '"too" means also, or very much',
-  two:   '"two" is the number 2',
-  their: '"their" means it belongs to them',
-  there: '"there" means a place or location',
+  to:      '"to" means going somewhere or doing something',
+  too:     '"too" means also, or very much',
+  two:     '"two" is the number 2',
+  their:   '"their" means it belongs to them',
+  there:   '"there" means a place or location',
+  "they're":'"they\'re" means they are',
 };
 function handleChoice(btn,chosen,correct,sentence){
   if(answered)return;answered=true;
@@ -782,8 +840,13 @@ function dDrawCard(){
 }
 function dDrawWord(){
   dWordCtx.clearRect(0,0,DCW,DCH);if(!dCurrentWord)return;
-  const fs=Math.floor(DCH*0.66);
+  // Scale font down for longer words so they always fit
+  let fs=Math.floor(DCH*0.66);
   dWordCtx.font=`${fs}px 'Fredoka One', cursive`;
+  while(dWordCtx.measureText(dCurrentWord).width > DCW*0.88 && fs > 20){
+    fs -= 4;
+    dWordCtx.font=`${fs}px 'Fredoka One', cursive`;
+  }
   dWordCtx.textAlign='center';dWordCtx.textBaseline='middle';
   dWordCtx.shadowColor='rgba(0,0,0,0.15)';dWordCtx.shadowBlur=16;dWordCtx.shadowOffsetY=5;
   dWordCtx.strokeStyle='rgba(0,0,0,0.13)';dWordCtx.lineWidth=fs*0.045;dWordCtx.lineJoin='round';
