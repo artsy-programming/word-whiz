@@ -465,6 +465,16 @@ body { font-family:'Nunito',sans-serif; background:#111111; min-height:100vh; ov
 <script>
 // ── SCREEN ROUTER ──
 function showScreen(id) {
+  // Nuke all YT iframes completely — guaranteed to kill audio
+  document.querySelectorAll('.yt-wrap iframe').forEach(f => {
+    const fresh = document.createElement('iframe');
+    fresh.id = f.id;
+    fresh.allowFullscreen = true;
+    fresh.allow = 'autoplay; encrypted-media';
+    f.replaceWith(fresh);
+  });
+  const vid = document.getElementById('learn-video');
+  if(vid){ vid.pause(); vid.src=''; vid.load(); }
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
@@ -495,6 +505,9 @@ function showVideo(word) {
   const label = document.getElementById('video-word-label');
   const tip   = document.getElementById('video-tip');
   const vid   = document.getElementById('learn-video');
+  // Kill any playing YouTube audio
+  document.getElementById('yt-frame-1').src = 'about:blank';
+  document.getElementById('yt-frame-2').src = 'about:blank';
   document.getElementById('yt-panel').classList.remove('visible');
   label.textContent = d.emoji + ' ' + word;
   label.style.color = d.color;
